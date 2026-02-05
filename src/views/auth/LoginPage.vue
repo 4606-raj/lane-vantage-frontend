@@ -31,7 +31,9 @@
 
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { authService } from '@/services/auth.service'
+import { useAuthStore } from '@/stores/auth.store'
+
+const authStore = useAuthStore()
 
 const form = reactive({
   email: '',
@@ -39,9 +41,8 @@ const form = reactive({
 })
 
 const submit = async () => {
-  const response = await authService.login(form)
+  const response = await authStore.login(form)
   console.log(response);
-  
 
 }
 </script>
