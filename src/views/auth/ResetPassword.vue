@@ -33,6 +33,7 @@
 import { ref, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useAuthStore } from '@/stores/auth.store'
+import { toaster } from '@/utils/toast'
 
 const route = useRoute()
 const router = useRouter()
@@ -41,7 +42,6 @@ const authStore = useAuthStore()
 const password = ref('')
 const confirmPassword = ref('')
 const errorMessage = ref('')
-const successMessage = ref('')
 const token = ref<string>('')
 
 onMounted(() => {
@@ -62,18 +62,22 @@ const submit = async () => {
   }
 
   try {
-    successMessage.value = await authStore.resetPassword({
+    const response = await authStore.resetPassword({
       token: token.value,
       password: password.value
     })
+
+    toaster.success(response)
 
     setTimeout(() => {
       router.push('/login')
     }, 3000)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (e: any) {
-    errorMessage.value =
-      e?.response?.data?.message || 'Reset failed'
+    toaster.error(
+    e?.response?.data?.message || 'Reset failed'
+  )
+
   }
 }
 </script>

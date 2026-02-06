@@ -29,12 +29,13 @@ export const useAuthStore = defineStore('auth', {
             this.loading = true;
 
             const response = await authService.login(payload)
-            
+
             this.token = response.accessToken;
             this.user = response.user;
 
-
             localStorage.setItem('accessToken', response.accessToken)
+
+            return {message: 'Login Successfull'};
         },
         async forgotPassword(email: string) {
             this.loading = true

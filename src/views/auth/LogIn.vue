@@ -30,13 +30,14 @@
     <div>
       <router-link :to="{name: 'forgot-password'}">Forgot Password ?</router-link>
     </div>
-    
+
   </form>
 </template>
 
 <script setup lang="ts">
 import { reactive } from 'vue'
 import { useAuthStore } from '@/stores/auth.store'
+import { toaster } from '@/utils/toast'
 
 const authStore = useAuthStore()
 
@@ -46,8 +47,14 @@ const form = reactive({
 })
 
 const submit = async () => {
-  const response = await authStore.login(form)
-  console.log(response);
+  try {
+    const response = await authStore.login(form)
+    toaster.success(response.message)
+  }
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  catch(e: any) {
+    toaster.error(e.message)
+  }
 
 }
 </script>
