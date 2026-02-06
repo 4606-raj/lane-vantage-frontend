@@ -5,7 +5,7 @@
 
   <form @submit.prevent="submit" class="space-y-4">
     <input
-      v-model="form.password"
+      v-model="password"
       type="password"
       placeholder="Password"
       class="w-full border rounded px-3 py-2"
@@ -13,7 +13,7 @@
     />
 
     <input
-      v-model="form.passoword_confirmation"
+      v-model="confirmPassword"
       type="password"
       placeholder="Confirm Password"
       class="w-full border rounded px-3 py-2"
@@ -30,19 +30,50 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
-// import { useAuthStore } from '@/stores/auth.store'
+import { ref, onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
+import { useAuthStore } from '@/stores/auth.store'
 
-// const authStore = useAuthStore()
+const route = useRoute()
+const router = useRouter()
+const authStore = useAuthStore()
 
-const form = reactive({
-  password: '',
-  passoword_confirmation: ''
+const password = ref('')
+const confirmPassword = ref('')
+const errorMessage = ref('')
+const successMessage = ref('')
+const token = ref<string>('')
+
+onMounted(() => {
+  const t = route.query.token
+  if (!t || typeof t !== 'string') {
+    errorMessage.value = 'Invalid or missing reset token'
+    return
+  }
+  token.value = t
 })
 
 const submit = async () => {
-//   const response = await authStore.login(form)
-//   console.log(response);
+  errorMessage.value = ''
 
+  if (password.value !== confirmPassword.value) {
+    errorMessage.value = 'Passwords do not match'
+    return
+  }
+
+  try {
+    successMessage.value = await authStore.resetPassword({
+      token: token.value,
+      password: password.value
+    })
+
+    setTimeout(() => {
+      router.push('/login')
+    }, 3000)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    errorMessage.value =
+      e?.response?.data?.message || 'Reset failed'
+  }
 }
 </script>

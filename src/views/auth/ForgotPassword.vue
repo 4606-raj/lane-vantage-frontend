@@ -5,7 +5,7 @@
 
   <form @submit.prevent="submit" class="space-y-4">
     <input
-      v-model="form.email"
+      v-model="email"
       type="email"
       placeholder="Email"
       class="w-full border rounded px-3 py-2"
@@ -22,18 +22,24 @@
 </template>
 
 <script setup lang="ts">
-import { reactive } from 'vue'
-// import { useAuthStore } from '@/stores/auth.store'
+import { ref } from 'vue'
+import { useAuthStore } from '@/stores/auth.store'
 
-// const authStore = useAuthStore()
+const authStore = useAuthStore()
 
-const form = reactive({
-  email: '',
-})
+const email = ref('')
+const successMessage = ref('')
+const errorMessage = ref('')
 
 const submit = async () => {
-//   const response = await authStore.login(form)
-//   console.log(response);
+  errorMessage.value = ''
+  successMessage.value = ''
 
+  try {
+    successMessage.value = await authStore.forgotPassword(email.value)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (e: any) {
+    errorMessage.value = e?.response?.data?.message || 'Something went wrong'
+  }
 }
 </script>

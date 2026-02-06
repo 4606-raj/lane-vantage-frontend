@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { authService, type LoginPayload } from '@/services/auth.service';
+import { authService, type LoginPayload, type ResetPasswordPayload } from '@/services/auth.service';
 
 export interface User {
     id: number,
@@ -35,6 +35,25 @@ export const useAuthStore = defineStore('auth', {
 
 
             localStorage.setItem('accessToken', response.accessToken)
+        },
+        async forgotPassword(email: string) {
+            this.loading = true
+            try {
+                const res = await authService.forgotPassword(email)
+                return res.message
+            } finally {
+                this.loading = false
+            }
+        },
+        async resetPassword(payload: ResetPasswordPayload) {
+            this.loading = true
+            try {
+                const res = await authService.resetPassword(payload)
+                return res.message
+            } finally {
+                this.loading = false
+            }
         }
+
     }
 })
