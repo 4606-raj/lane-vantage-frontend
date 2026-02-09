@@ -4,41 +4,70 @@ import GuestLayout from '@/layouts/GuestLayout.vue'
 import LogIn from '@/views/auth/LogIn.vue'
 import ForgotPassword from '@/views/auth/ForgotPassword.vue'
 import ResetPassword from '@/views/auth/ResetPassword.vue'
+import { useAuthStore } from '@/stores/auth.store'
+import AppLayout from '@/layouts/AppLayout.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
-      path: '/',
-      name: 'home',
+      path: '/auth',
+      name: 'auth',
       component: GuestLayout,
+      meta: { guest: true },
       children: [
         {
           path: 'login',
           name: 'login',
-          component: LogIn
+          component: LogIn,
+          meta: { guest: true },
         },
         {
           path: 'forgot-password',
           name: 'forgot-password',
-          component: ForgotPassword
+          component: ForgotPassword,
+          meta: { guest: true },
         },
         {
           path: 'reset-password',
           name: 'reset-password',
-          component: ResetPassword
+          component: ResetPassword,
+          meta: { guest: true },
         },
       ]
     },
-    // {
-    //   path: '/about',
-    //   name: 'about',
-    //   // route level code-splitting
-    //   // this generates a separate chunk (About.[hash].js) for this route
-    //   // which is lazy-loaded when the route is visited.
-    //   component: () => import('../views/AboutView.vue'),
-    // },
+     {
+      path: '/',
+      component: AppLayout,
+      meta: { requiresAuth: true },
+      children: [
+        {
+          path: '',
+          name: 'home',
+          component: HomeView,
+        },
+      ],
+    },
   ],
+})
+
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore()
+  const isLoggedIn = authStore.isAuthenticated
+
+  const requiresAuth = to.matched.some(r => r.meta.requiresAuth)
+  const isGuest = to.matched.some(r => r.meta.guest)
+
+  if (requiresAuth && !isLoggedIn) {
+    return next({ name: 'login' })
+  }
+
+  if (isGuest && isLoggedIn) {
+    return next({ name: 'home' })
+  }
+
+
+  next()
 })
 
 export default router
