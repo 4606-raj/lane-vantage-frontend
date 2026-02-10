@@ -38,6 +38,7 @@
 import { reactive } from 'vue'
 import { useAuthStore } from '@/stores/auth.store'
 import { toaster } from '@/utils/toast'
+import router from '@/router'
 
 const authStore = useAuthStore()
 
@@ -50,6 +51,8 @@ const submit = async () => {
   try {
     const response = await authStore.login(form)
     toaster.success(response.message)
+
+    router.push({name: 'home'})
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   catch(e: any) {

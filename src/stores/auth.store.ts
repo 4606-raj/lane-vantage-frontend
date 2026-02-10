@@ -21,7 +21,7 @@ export const useAuthStore = defineStore('auth', {
     }),
 
     getters: {
-        isAuthenticated: (state) => !!state.token
+      isAuthenticated: (state) => !!state.token
     },
 
     actions: {
@@ -38,22 +38,34 @@ export const useAuthStore = defineStore('auth', {
             return {message: 'Login Successfull'};
         },
         async forgotPassword(email: string) {
-            this.loading = true
-            try {
-                const res = await authService.forgotPassword(email)
-                return res.message
-            } finally {
-                this.loading = false
-            }
+          this.loading = true
+          try {
+            const res = await authService.forgotPassword(email)
+            return res.message
+          } finally {
+            this.loading = false
+          }
         },
         async resetPassword(payload: ResetPasswordPayload) {
-            this.loading = true
+          this.loading = true
+          try {
+            const res = await authService.resetPassword(payload)
+            return res.message
+          } finally {
+            this.loading = false
+          }
+        },
+        async logout() {
+          this.loading = true
             try {
-                const res = await authService.resetPassword(payload)
-                return res.message
-            } finally {
-                this.loading = false
-            }
+              const token = this.token || '';
+              const res = await authService.logout(token)
+              this.token = null;
+              localStorage.removeItem('accessToken')
+              return res.message
+          } finally {
+              this.loading = false
+          }
         }
 
     }

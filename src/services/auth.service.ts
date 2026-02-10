@@ -19,7 +19,7 @@ export interface LoginResponse {
   }
 }
 
-export interface forgotPasswordResponse {
+export interface defaultResponse {
   message: string,
 }
 
@@ -29,15 +29,19 @@ export const authService = {
       return api.post('/auth/login', payload)
     },
 
-    forgotPassword(email: string): Promise<forgotPasswordResponse> {
+    forgotPassword(email: string): Promise<defaultResponse> {
       return api.post('/auth/forgot-password', {email})
     },
 
-    resetPassword(payload: ResetPasswordPayload): Promise<forgotPasswordResponse> {
+    resetPassword(payload: ResetPasswordPayload): Promise<defaultResponse> {
 
       const password = payload.password
       const token = payload.token
-      
+
       return api.post('/auth/reset-password', {token, password})
+    },
+
+    logout(token: string): Promise<defaultResponse> {
+      return api.post('/auth/logout', {token})
     }
 }
