@@ -6,7 +6,7 @@
 
     <!-- Main content -->
     <main class="flex-1 p-6">
-      <slot />
+      <router-view />
     </main>
   </div>
 </template>

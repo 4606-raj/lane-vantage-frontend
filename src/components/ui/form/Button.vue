@@ -2,10 +2,10 @@
 <template>
   <button
     :disabled="loading || disabled"
-    class="font-bold py-2 px-4 rounded inline-flex items-center gap-2 transition"
+    class="flex items-center gap-3 rounded-lg bg-gray-900 py-2 px-4 text-center align-middle text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none cursor-pointer"
     :class="loading || disabled
       ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-      : 'bg-gray-300 hover:bg-gray-400 text-gray-800'"
+      : ''"
     @click="handleClick"
   >
     <!-- Loader -->
