@@ -1,25 +1,8 @@
 <template>
   <div class="min-h-screen flex bg-gray-50">
     <!-- Sidebar -->
-    <aside class="w-64 bg-white border-r">
-      <div class="p-4 font-bold text-lg">
-        Lane Vantage
-      </div>
 
-      <div class="p-4">
-
-        <button class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded inline-flex items-center cursor-pointer" v-on:click="logout()">
-
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" height="24" width="24">
-            <g id="logout">
-              <path id="Union" fill="#000000" d="M14 3c0.5523 0 1 0.44772 1 1s-0.4477 1 -1 1H5v14h9c0.5523 0 1 0.4477 1 1s-0.4477 1 -1 1H5c-1.10457 0 -2 -0.8954 -2 -2V5c0 -1.10457 0.89543 -2 2 -2zm1.543 5.04297c0.3905 -0.39048 1.0235 -0.39048 1.414 0l3.25 3.25003c0.0478 0.0478 0.0906 0.1006 0.128 0.1572 0.0247 0.0375 0.0462 0.0764 0.0654 0.1162 0.0218 0.0452 0.0408 0.092 0.0557 0.1406 0.0061 0.0203 0.0107 0.041 0.0156 0.0616 0.0176 0.0743 0.0283 0.1517 0.0283 0.2314 0 0.083 -0.0122 0.1631 -0.0312 0.2402 -0.0042 0.017 -0.0077 0.0341 -0.0127 0.0508 -0.0149 0.049 -0.0338 0.0961 -0.0557 0.1416 -0.02 0.0417 -0.0432 0.082 -0.0693 0.1211 -0.0126 0.0188 -0.0263 0.0368 -0.0401 0.0547 -0.026 0.0338 -0.053 0.0676 -0.084 0.0986l-3.25 3.25c-0.3905 0.3905 -1.0235 0.3905 -1.414 0s-0.3905 -1.0235 0 -1.414L17.0859 13H10c-0.55226 0 -0.99996 -0.4478 -1 -1 0.00003 -0.5523 0.44774 -1 1 -1h7.0859L15.543 9.45703c-0.3905 -0.39051 -0.3905 -1.02354 0 -1.41406" stroke-width="1"></path>
-            </g>
-            </svg>
-          <span>Logout</span>
-        </button>
-
-      </div>
-    </aside>
+    <side-bar />
 
     <!-- Main content -->
     <main class="flex-1 p-6">
@@ -29,22 +12,6 @@
 </template>
 
 <script setup lang="ts">
-import router from '@/router';
-import { useAuthStore } from '@/stores/auth.store';
-import { toaster } from '@/utils/toast';
+import SideBar from './SideBar.vue';
 
-const authStore = useAuthStore()
-
-const logout = async () => {
-  try {
-    const response = await authStore.logout()
-    toaster.success(response)
-
-    router.push({name: 'login'})
-  }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  catch(e: any) {
-    toaster.error(e.message)
-  }
-}
 </script>
