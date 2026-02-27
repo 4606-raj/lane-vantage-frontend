@@ -1,65 +1,65 @@
 <template>
-  <aside class="w-64 bg-white border-r">
-    <div class="p-4 font-bold text-lg">
-      Lane Vantage
+  <aside class="flex h-screen w-72 flex-col border-r border-slate-200 bg-slate-50/70 backdrop-blur">
+    <div class="px-6 pb-5 pt-7">
+      <RouterLink to="/" >
+
+        <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-400">
+          Workspace
+        </p>
+        <h1 class="mt-2 text-2xl font-semibold tracking-tight text-slate-900">
+          Lane Vantage
+        </h1>
+
+      </RouterLink>
+      <div class="mt-5 h-px bg-slate-200" />
     </div>
 
-    <hr>
-
-    <!-- list of sidebar menu here -->
-     <ul class="space-y-6">
+    <nav class="flex-1 overflow-y-auto px-3">
+      <ul class="space-y-5 pb-4">
       <li
         v-for="section in sidebarMenu"
         :key="section.section"
+        class="rounded-2xl border border-slate-200/80 bg-white/90 p-3 shadow-sm shadow-slate-200/40"
       >
-        <!-- Section title -->
         <p
           v-if="section.section"
-          class="px-4 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider"
+          class="mb-2 px-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400"
         >
           {{ section.section }}
         </p>
 
-        <ul class="space-y-1">
+        <ul class="space-y-1.5">
           <li
             v-for="item in section.items"
             :key="item.route"
             @click="$router.push({ name: item.route })"
-            class="group flex items-center gap-3 px-4 py-2 rounded-md cursor-pointer
-                  text-gray-700 hover:bg-gray-100 hover:text-gray-900
-                  transition-colors"
+            class="group flex cursor-pointer items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 transition-all duration-200 hover:bg-slate-100 hover:text-slate-900"
             :class="{
-              'bg-gray-100 text-gray-900 font-medium':
+              'bg-slate-900 text-white shadow-sm shadow-slate-900/20 hover:bg-slate-900 hover:text-white':
                 $route.name === item.route
             }"
           >
-            <!-- Icon -->
-            <component
-              :is="item.icon"
-              class="w-5 h-5 text-gray-400 group-hover:text-gray-600"
-              :class="{
-                'text-gray-600': $route.name === item.route
-              }"
-            />
-
-            <!-- Label -->
-            <span class="text-sm">
+            <span>
               {{ item.label }}
             </span>
+            <span
+              class="h-1.5 w-1.5 rounded-full bg-slate-300 transition-colors group-hover:bg-slate-500"
+              :class="{ 'bg-white': $route.name === item.route }"
+            />
           </li>
         </ul>
       </li>
     </ul>
+    </nav>
 
-    <hr>
-
-    <div class="p-4">
-
-      <Button @click="logout" >
+    <div class="border-t border-slate-200 p-4">
+      <Button
+        class="w-full justify-center border border-slate-200 !bg-white !text-slate-700 shadow-none hover:!bg-slate-50"
+        @click="logout"
+      >
         <LogoutIcon />
         <span>Logout</span>
       </Button>
-
     </div>
   </aside>
 </template>
@@ -90,25 +90,25 @@ import LogoutIcon from '@/components/icons/LogoutIcon.vue';
   {
     section: 'main',
     items: [
-      { label: 'Dashboard', icon: 'DashboardIcon', route: 'dashboard' },
-      { label: 'Boards', icon: 'BoardIcon', route: 'boards' },
-      { label: 'Projects', icon: 'ProjectIcon', route: 'projects' },
-      { label: 'Tasks', icon: 'TaskIcon', route: 'tasks' }
+      { label: 'Dashboard', route: 'dashboard' },
+      { label: 'Boards', route: 'boards' },
+      { label: 'Projects', route: 'projects' },
+      { label: 'Tasks', route: 'tasks' }
     ]
   },
   {
     section: 'work',
     items: [
-      { label: 'My Tasks', icon: 'UserTaskIcon', route: 'my-tasks' },
-      { label: 'Due Today', icon: 'CalendarIcon', route: 'tasks-today' },
-      { label: 'Overdue', icon: 'WarningIcon', route: 'tasks-overdue' }
+      { label: 'My Tasks', route: 'my-tasks' },
+      { label: 'Due Today', route: 'tasks-today' },
+      { label: 'Overdue', route: 'tasks-overdue' }
     ]
   },
   {
     section: 'settings',
     items: [
-      { label: 'Profile', icon: 'ProfileIcon', route: 'profile' },
-      { label: 'Settings', icon: 'SettingsIcon', route: 'settings' }
+      { label: 'Profile', route: 'profile' },
+      { label: 'Settings', route: 'settings' }
     ]
   }
 ]

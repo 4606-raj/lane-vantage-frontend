@@ -22,9 +22,31 @@
 
     <button
       type="submit"
-      class="w-full bg-black text-white py-2 rounded hover:opacity-90 cursor-pointer"
+      :disabled="uiStore.getButtonLoader"
+      class="flex w-full items-center justify-center gap-2 rounded bg-black py-2 text-white transition-opacity"
+      :class="uiStore.getButtonLoader ? 'cursor-not-allowed opacity-70' : 'cursor-pointer hover:opacity-90'"
     >
-      Sign in
+      <svg
+        v-if="uiStore.getButtonLoader"
+        class="h-4 w-4 animate-spin"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+          fill="none"
+        />
+        <path
+          class="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+        />
+      </svg>
+      <span>{{ uiStore.getButtonLoader ? 'Signing in...' : 'Sign in' }}</span>
     </button>
 
     <div>
@@ -39,6 +61,9 @@ import { reactive } from 'vue'
 import { useAuthStore } from '@/stores/auth.store'
 import { toaster } from '@/utils/toast'
 import router from '@/router'
+import { useUIStore } from '@/stores/ui.store'
+
+const uiStore = useUIStore()
 
 const authStore = useAuthStore()
 
@@ -48,6 +73,8 @@ const form = reactive({
 })
 
 const submit = async () => {
+  uiStore.setButtonLoader(true)
+
   try {
     const response = await authStore.login(form)
     toaster.success(response.message)
@@ -57,7 +84,8 @@ const submit = async () => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   catch(e: any) {
     toaster.error(e.message)
+  } finally {
+    uiStore.setButtonLoader(false)
   }
-
 }
 </script>

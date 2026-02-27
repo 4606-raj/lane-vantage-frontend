@@ -18,6 +18,9 @@
     >
       Send Link
     </button>
+
+    <RouterLink :to="{ name: 'login' }">Login</RouterLink>
+
   </form>
 </template>
 
