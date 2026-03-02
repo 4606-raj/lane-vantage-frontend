@@ -1,16 +1,17 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <button
-    :disabled="loading || disabled"
+    :type="type"
+    :disabled="uiStore.buttonLoading || disabled"
     class="flex items-center gap-3 rounded-lg bg-gray-900 py-2 px-4 text-center align-middle text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none cursor-pointer"
-    :class="loading || disabled
+    :class="uiStore.buttonLoading || disabled
       ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
       : ''"
     @click="handleClick"
   >
     <!-- Loader -->
     <svg
-      v-if="loading"
+      v-if="uiStore.buttonLoading"
       class="animate-spin h-4 w-4"
       viewBox="0 0 24 24"
     >
@@ -35,23 +36,34 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { useUIStore } from '@/stores/ui.store'
 
-const props = defineProps<{
-  onClick: () => Promise<void> | void
+const props = withDefaults(defineProps<{
+  onClick?: () => Promise<void> | void
   disabled?: boolean
+  type?: 'button' | 'submit' | 'reset'
+}>(), {
+  type: 'button',
+})
+
+const emit = defineEmits<{
+  click: []
 }>()
 
-const loading = ref(false)
+const uiStore = useUIStore()
 
 const handleClick = async () => {
-  if (loading.value || props.disabled) return
+  if (props.disabled) return
 
   try {
-    loading.value = true
-    await props.onClick()
+    uiStore.setButtonLoader(true)
+    if (props.onClick) {
+      await props.onClick()
+    } else {
+      emit('click')
+    }
   } finally {
-    loading.value = false
+    uiStore.setButtonLoader(false)
   }
 }
 </script>
