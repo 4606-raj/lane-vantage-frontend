@@ -54,7 +54,7 @@
 
     <div class="border-t border-slate-200 p-4">
       <Button
-        class="w-full justify-center border border-slate-200 !bg-white !text-slate-700 shadow-none hover:!bg-slate-50"
+      class="w-full"
         @click="logout"
       >
         <LogoutIcon />

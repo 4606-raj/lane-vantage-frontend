@@ -12,12 +12,7 @@
       required
     />
 
-    <button
-      type="submit"
-      class="w-full bg-black text-white py-2 rounded hover:opacity-90 cursor-pointer"
-    >
-      Send Link
-    </button>
+    <Button type="submit" class="w-full">Send Link</Button>
 
     <div>
       <span>
@@ -32,6 +27,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useAuthStore } from '@/stores/auth.store'
+import Button from '@/components/ui/form/Button.vue'
 
 const authStore = useAuthStore()
 

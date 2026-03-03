@@ -11,6 +11,7 @@ const toastOptions: PluginOptions = {
   pauseOnHover: true,
   draggable: true,
   hideProgressBar: true,
+  maxToasts: 3,
 }
 
 

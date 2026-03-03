@@ -1,38 +1,39 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
-  <button
-    :type="type"
-    :disabled="uiStore.buttonLoading || disabled"
-    class="flex items-center gap-3 rounded-lg bg-gray-900 py-2 px-4 text-center align-middle text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none cursor-pointer"
-    :class="uiStore.buttonLoading || disabled
-      ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-      : ''"
-    @click="handleClick"
-  >
-    <!-- Loader -->
-    <svg
-      v-if="uiStore.buttonLoading"
-      class="animate-spin h-4 w-4"
-      viewBox="0 0 24 24"
-    >
-      <circle
-        class="opacity-25"
-        cx="12"
-        cy="12"
-        r="10"
-        stroke="currentColor"
-        stroke-width="4"
-        fill="none"
-      />
-      <path
-        class="opacity-75"
-        fill="currentColor"
-        d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-      />
-    </svg>
 
-    <slot />
-  </button>
+    <button
+      :type="type"
+      :disabled="uiStore.buttonLoading || disabled"
+      class="flex items-center gap-3 rounded-lg bg-gray-900 py-2 px-4 text-center align-middle text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none cursor-pointer justify-center border border-slate-200 !bg-white !text-slate-700 shadow-none hover:!bg-slate-50"
+      :class="uiStore.buttonLoading || disabled
+        ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+        : ''"
+      @click="handleClick"
+    >
+      <!-- Loader -->
+      <svg
+        v-if="uiStore.buttonLoading"
+        class="animate-spin h-4 w-4"
+        viewBox="0 0 24 24"
+      >
+        <circle
+          class="opacity-25"
+          cx="12"
+          cy="12"
+          r="10"
+          stroke="currentColor"
+          stroke-width="4"
+          fill="none"
+        />
+        <path
+          class="opacity-75"
+          fill="currentColor"
+          d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+        />
+      </svg>
+
+      <slot />
+    </button>
 </template>
 
 <script setup lang="ts">
