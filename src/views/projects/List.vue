@@ -17,6 +17,7 @@
         <Button
           @click="() => {}"
         >
+          <Plus class="w-4 h-4" />
           Add New
         </Button>
       </div>
@@ -118,19 +119,20 @@
 
               <td class="px-6 py-4 text-right">
                 <div class="flex justify-end gap-4 text-xs font-semibold uppercase tracking-[0.1em]">
-                  <button
-                    class="text-slate-500 transition hover:text-slate-900"
-                    @click="$router.push({ name: 'product-edit', params: { id: product.id } })"
+                  <Button
+                  class="!bg-yellow-400"
+                    :onclick="() => $router.push({ name: 'product-edit', params: { id: product.id } })"
                   >
-                    Edit
-                  </button>
+                    <Edit />
+                  </Button>
 
-                  <button
-                    class="text-rose-500 transition hover:text-rose-700"
-                    @click="remove(product.id)"
+                  <Button
+                  class="!bg-red-600"
+                    :onclick="() => remove(product.id)"
                   >
-                    Delete
-                  </button>
+                  <Trash />
+                </Button>
+
                 </div>
               </td>
             </tr>
@@ -150,6 +152,7 @@
 
 <script setup lang="ts">
 import Button from '@/components/ui/form/Button.vue'
+import { Edit, Plus, Trash } from 'lucide-vue-next'
 import { ref, computed } from 'vue'
 
 interface Product {

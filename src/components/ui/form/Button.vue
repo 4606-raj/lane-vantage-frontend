@@ -4,7 +4,7 @@
     <button
       :type="type"
       :disabled="uiStore.buttonLoading || disabled"
-      class="flex items-center gap-3 rounded-lg bg-gray-900 py-2 px-4 text-center align-middle text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none cursor-pointer justify-center border border-slate-200 !bg-white !text-slate-700 shadow-none hover:!bg-slate-50"
+      class="flex items-center gap-3 rounded-lg bg-gray-900 py-2 px-4 text-center align-middle text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none cursor-pointer justify-center border border-slate-200 bg-white !text-slate-700 shadow-none hover:bg-slate-50"
       :class="uiStore.buttonLoading || disabled
         ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
         : ''"
