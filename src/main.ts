@@ -4,6 +4,7 @@ import { createApp } from 'vue'
 import { createPinia } from 'pinia'
 import Toast, { type PluginOptions } from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
+import { resolveInitialTheme, setTheme } from './utils/theme'
 
 const toastOptions: PluginOptions = {
   timeout: 3000,
@@ -17,6 +18,8 @@ const toastOptions: PluginOptions = {
 
 import App from './App.vue'
 import router from './router'
+
+setTheme(resolveInitialTheme())
 
 const app = createApp(App)
 

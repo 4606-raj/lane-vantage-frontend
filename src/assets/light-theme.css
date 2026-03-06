@@ -1,0 +1,56 @@
+:root[data-theme='light'] {
+  color-scheme: light;
+
+  /* App surfaces */
+  --lv-bg-app: #f3f5f9;
+  --lv-bg-sidebar: #eef2f7;
+  --lv-bg-surface: #ffffff;
+  --lv-bg-surface-soft: #f8fafc;
+  --lv-bg-surface-muted: #f1f5f9;
+
+  /* Borders and separators */
+  --lv-border: #dbe3ee;
+  --lv-border-soft: #e8edf5;
+  --lv-border-strong: #cdd8e6;
+
+  /* Text hierarchy */
+  --lv-text-primary: #0f172a;
+  --lv-text-secondary: #334155;
+  --lv-text-muted: #64748b;
+  --lv-text-faint: #94a3b8;
+  --lv-text-on-accent: #ffffff;
+
+  /* Accent and status */
+  --lv-accent: #0f172a;
+  --lv-accent-hover: #1e293b;
+  --lv-accent-soft: #e2e8f0;
+
+  --lv-success-bg: #dcfce7;
+  --lv-success-text: #166534;
+  --lv-warning-bg: #fef3c7;
+  --lv-warning-text: #92400e;
+  --lv-danger-bg: #fee2e2;
+  --lv-danger-text: #991b1b;
+
+  /* Controls */
+  --lv-input-bg: #f8fafc;
+  --lv-input-bg-focus: #ffffff;
+  --lv-input-border: #dbe3ee;
+  --lv-input-border-focus: #c4d2e4;
+  --lv-focus-ring: #cdd8e6;
+
+  /* Buttons */
+  --lv-btn-bg: #ffffff;
+  --lv-btn-text: #334155;
+  --lv-btn-border: #dbe3ee;
+  --lv-btn-hover-border: #cdd8e6;
+  --lv-btn-hover-bg: #f8fafc;
+  --lv-btn-shadow: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --lv-btn-hover-shadow: 0 8px 16px rgba(15, 23, 42, 0.08);
+  --lv-btn-disabled-bg: #f1f5f9;
+  --lv-btn-disabled-text: #94a3b8;
+
+  /* Shadows */
+  --lv-shadow-sm: 0 1px 2px rgba(15, 23, 42, 0.05);
+  --lv-shadow-md: 0 6px 18px rgba(15, 23, 42, 0.08);
+}

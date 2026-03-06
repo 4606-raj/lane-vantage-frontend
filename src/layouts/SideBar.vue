@@ -1,17 +1,17 @@
 <template>
-  <aside class="flex h-screen w-72 flex-col border-r border-slate-200 bg-slate-50/70 backdrop-blur">
+  <aside class="flex h-screen w-72 flex-col border-r border-[var(--lv-border)] bg-[var(--lv-bg-sidebar)] text-[var(--lv-text-primary)] backdrop-blur">
     <div class="px-6 pb-5 pt-7">
       <RouterLink to="/" >
 
-        <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-slate-400">
+        <p class="text-[11px] font-semibold uppercase tracking-[0.28em] text-[var(--lv-text-faint)]">
           Workspace
         </p>
-        <h1 class="mt-2 text-2xl font-semibold tracking-tight text-slate-900">
+        <h1 class="mt-2 text-2xl font-semibold tracking-tight text-[var(--lv-text-primary)]">
           Lane Vantage
         </h1>
 
       </RouterLink>
-      <div class="mt-5 h-px bg-slate-200" />
+      <div class="mt-5 h-px bg-[var(--lv-border)]" />
     </div>
 
     <nav class="flex-1 overflow-y-auto px-3">
@@ -19,11 +19,11 @@
       <li
         v-for="section in sidebarMenu"
         :key="section.section"
-        class="rounded-2xl border border-slate-200/80 bg-white/90 p-3 shadow-sm shadow-slate-200/40"
+        class="rounded-2xl border border-[var(--lv-border)] bg-[var(--lv-bg-surface)] p-3 shadow-[var(--lv-shadow-sm)]"
       >
         <p
           v-if="section.section"
-          class="mb-2 px-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-slate-400"
+          class="mb-2 px-3 text-[11px] font-semibold uppercase tracking-[0.2em] text-[var(--lv-text-faint)]"
         >
           {{ section.section }}
         </p>
@@ -33,9 +33,9 @@
             v-for="item in section.items"
             :key="item.route"
             @click="$router.push({ name: item.route })"
-            class="group flex cursor-pointer items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 transition-all duration-200 hover:bg-slate-100 hover:text-slate-900"
+            class="group flex cursor-pointer items-center justify-between rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 hover:bg-[var(--lv-bg-surface-soft)] hover:text-[var(--lv-text-primary)]"
             :class="{
-              'bg-slate-900 text-white shadow-sm shadow-slate-900/20 hover:bg-slate-900 hover:text-white':
+              'bg-[var(--lv-accent)] text-[var(--lv-text-on-accent)] shadow-[var(--lv-shadow-sm)] hover:bg-[var(--lv-accent)] hover:text-[var(--lv-text-on-accent)]':
                 $route.name === item.route
             }"
           >
@@ -43,8 +43,8 @@
               {{ item.label }}
             </span>
             <span
-              class="h-1.5 w-1.5 rounded-full bg-slate-300 transition-colors group-hover:bg-slate-500"
-              :class="{ 'bg-white': $route.name === item.route }"
+              class="h-1.5 w-1.5 rounded-full bg-[var(--lv-text-faint)] transition-colors group-hover:bg-[var(--lv-text-muted)]"
+              :class="{ 'bg-[var(--lv-text-on-accent)]': $route.name === item.route }"
             />
           </li>
         </ul>
@@ -52,9 +52,20 @@
     </ul>
     </nav>
 
-    <div class="border-t border-slate-200 p-4">
+    <div class="space-y-3 border-t border-[var(--lv-border)] p-4">
       <Button
-      class="w-full"
+        class="w-full"
+        @click="toggleTheme"
+      >
+        <component
+          :is="theme === 'light' ? Moon : Sun"
+          class="h-4 w-4"
+        />
+        <span>{{ theme === 'light' ? 'Dark Theme' : 'Light Theme' }}</span>
+      </Button>
+
+      <Button
+        class="w-full"
         @click="logout"
       >
         <LogoutIcon />
@@ -70,6 +81,17 @@ import { useAuthStore } from '@/stores/auth.store';
 import { toaster } from '@/utils/toast';
 import Button from '@/components/ui/form/Button.vue'
 import LogoutIcon from '@/components/icons/LogoutIcon.vue';
+import { resolveInitialTheme, setTheme, type Theme } from '@/utils/theme';
+import { Moon, Sun } from 'lucide-vue-next'
+import { ref } from 'vue';
+
+const theme = ref<Theme>(resolveInitialTheme())
+
+const toggleTheme = () => {
+  const nextTheme: Theme = theme.value === 'light' ? 'dark' : 'light'
+  theme.value = nextTheme
+  setTheme(nextTheme)
+}
 
   const authStore = useAuthStore()
 

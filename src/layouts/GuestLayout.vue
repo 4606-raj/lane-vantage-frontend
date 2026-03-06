@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen flex items-center justify-center bg-gray-100">
-    <div class="w-full max-w-md p-6 bg-white rounded-xl shadow">
+  <div class="flex min-h-screen items-center justify-center bg-[var(--lv-bg-app)]">
+    <div class="w-full max-w-md rounded-xl border border-[var(--lv-border)] bg-[var(--lv-bg-surface)] p-6 text-[var(--lv-text-primary)] shadow-[var(--lv-shadow-sm)]">
       <router-view />
     </div>
   </div>

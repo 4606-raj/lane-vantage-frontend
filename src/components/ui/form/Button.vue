@@ -4,9 +4,9 @@
     <button
       :type="type"
       :disabled="uiStore.buttonLoading || disabled"
-      class="flex items-center gap-3 rounded-lg bg-gray-900 py-2 px-4 text-center align-middle text-white shadow-md shadow-gray-900/10 transition-all hover:shadow-lg hover:shadow-gray-900/20 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none cursor-pointer justify-center border border-slate-200 bg-white !text-slate-700 shadow-none hover:bg-slate-50"
+      class="flex cursor-pointer items-center justify-center gap-3 rounded-lg border border-[var(--lv-border)] bg-[var(--lv-btn-bg)] px-4 py-2 text-center align-middle text-[var(--lv-text-secondary)] shadow-[var(--lv-shadow-sm)] transition-all hover:bg-[var(--lv-btn-hover-bg)] hover:shadow-lg hover:shadow-[var(--lv-btn-hover-shadow)] focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
       :class="uiStore.buttonLoading || disabled
-        ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+        ? 'cursor-not-allowed bg-[var(--lv-bg-surface-muted)] text-[var(--lv-text-faint)]'
         : ''"
       @click="handleClick"
     >

@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex bg-gray-50">
+  <div class="flex min-h-screen bg-[var(--lv-bg-app)] text-[var(--lv-text-primary)]">
     <!-- Sidebar -->
 
     <side-bar />

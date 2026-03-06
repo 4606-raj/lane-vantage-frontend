@@ -8,7 +8,7 @@
       v-model="form.email"
       type="email"
       placeholder="Email"
-      class="w-full border rounded px-3 py-2"
+      class="h-12 w-full rounded-xl border border-[var(--lv-input-border)] bg-[var(--lv-input-bg)] px-3 text-[var(--lv-text-secondary)] outline-none transition focus:border-[var(--lv-input-border-focus)] focus:bg-[var(--lv-input-bg-focus)] focus:ring-2 focus:ring-[var(--lv-focus-ring)]"
       required
     />
 
@@ -16,7 +16,7 @@
       v-model="form.password"
       type="password"
       placeholder="Password"
-      class="w-full border rounded px-3 py-2"
+      class="h-12 w-full rounded-xl border border-[var(--lv-input-border)] bg-[var(--lv-input-bg)] px-3 text-[var(--lv-text-secondary)] outline-none transition focus:border-[var(--lv-input-border-focus)] focus:bg-[var(--lv-input-bg-focus)] focus:ring-2 focus:ring-[var(--lv-focus-ring)]"
       required
     />
 

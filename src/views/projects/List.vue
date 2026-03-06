@@ -1,16 +1,16 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="space-y-6">
-    <section class="rounded-2xl border border-slate-200 bg-white/90 p-6 shadow-sm shadow-slate-200/50">
+    <section class="rounded-2xl border border-[var(--lv-border)] bg-[var(--lv-bg-surface)] p-6 shadow-[var(--lv-shadow-sm)]">
       <div class="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <p class="text-[11px] font-semibold uppercase tracking-[0.22em] text-slate-400">
+          <p class="text-[11px] font-semibold uppercase tracking-[0.22em] text-[var(--lv-text-faint)]">
             Workspace
           </p>
-          <h1 class="mt-1 text-2xl font-semibold tracking-tight text-slate-900">
+          <h1 class="mt-1 text-2xl font-semibold tracking-tight text-[var(--lv-text-primary)]">
             Projects
           </h1>
-          <p class="mt-1 text-sm text-slate-500">
+          <p class="mt-1 text-sm text-[var(--lv-text-muted)]">
             Track, filter, and manage your active work items.
           </p>
         </div>
@@ -23,28 +23,28 @@
       </div>
     </section>
 
-    <section class="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm shadow-slate-200/50 sm:p-5">
+    <section class="rounded-2xl border border-[var(--lv-border)] bg-[var(--lv-bg-surface)] p-4 shadow-[var(--lv-shadow-sm)] sm:p-5">
       <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
         <div class="flex flex-1 flex-col gap-3 sm:flex-row">
           <label class="relative block w-full sm:max-w-md">
-            <span class="pointer-events-none absolute left-3 top-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+            <span class="pointer-events-none absolute left-3 top-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--lv-text-faint)]">
               Search
             </span>
             <input
               v-model="search"
               type="text"
               placeholder="Find a project"
-              class="h-12 w-full rounded-xl border border-slate-200 bg-slate-50/70 px-3 pt-4 text-sm text-slate-700 outline-none transition focus:border-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-200"
+              class="h-12 w-full rounded-xl border border-[var(--lv-input-border)] bg-[var(--lv-input-bg)] px-3 pt-4 text-sm text-[var(--lv-text-secondary)] outline-none transition focus:border-[var(--lv-input-border-focus)] focus:bg-[var(--lv-input-bg-focus)] focus:ring-2 focus:ring-[var(--lv-focus-ring)]"
             />
           </label>
 
           <label class="relative block w-full sm:w-56">
-            <span class="pointer-events-none absolute left-3 top-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-slate-400">
+            <span class="pointer-events-none absolute left-3 top-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--lv-text-faint)]">
               Status
             </span>
             <select
               v-model="status"
-              class="h-12 w-full appearance-none rounded-xl border border-slate-200 bg-slate-50/70 px-3 pt-4 text-sm text-slate-700 outline-none transition focus:border-slate-300 focus:bg-white focus:ring-2 focus:ring-slate-200"
+              class="h-12 w-full appearance-none rounded-xl border border-[var(--lv-input-border)] bg-[var(--lv-input-bg)] px-3 pt-4 text-sm text-[var(--lv-text-secondary)] outline-none transition focus:border-[var(--lv-input-border-focus)] focus:bg-[var(--lv-input-bg-focus)] focus:ring-2 focus:ring-[var(--lv-focus-ring)]"
             >
               <option value="">
                 All Status
@@ -59,16 +59,16 @@
           </label>
         </div>
 
-        <span class="self-start rounded-full bg-slate-100 px-3 py-1 text-xs font-semibold text-slate-500 md:self-center">
+        <span class="self-start rounded-full bg-[var(--lv-bg-surface-muted)] px-3 py-1 text-xs font-semibold text-[var(--lv-text-muted)] md:self-center">
           {{ filteredProducts.length }} Results
         </span>
       </div>
     </section>
 
-    <section class="overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm shadow-slate-200/50">
+    <section class="overflow-hidden rounded-2xl border border-[var(--lv-border)] bg-[var(--lv-bg-surface)] shadow-[var(--lv-shadow-sm)]">
       <div class="overflow-x-auto">
         <table class="min-w-full text-sm">
-          <thead class="bg-slate-50/90 text-slate-500">
+          <thead class="bg-[var(--lv-bg-surface-soft)] text-[var(--lv-text-muted)]">
             <tr>
               <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.16em]">
                 Project
@@ -92,17 +92,17 @@
             <tr
               v-for="product in filteredProducts"
               :key="product.id"
-              class="border-t border-slate-100 transition hover:bg-slate-50/70"
+              class="border-t border-[var(--lv-border-soft)] transition hover:bg-[var(--lv-bg-surface-soft)]"
             >
-              <td class="px-6 py-4 font-medium text-slate-900">
+              <td class="px-6 py-4 font-medium text-[var(--lv-text-primary)]">
                 {{ product.name }}
               </td>
 
-              <td class="px-6 py-4 text-slate-600">
+              <td class="px-6 py-4 text-[var(--lv-text-secondary)]">
                 {{ product.category }}
               </td>
 
-              <td class="px-6 py-4 font-medium text-slate-700">
+              <td class="px-6 py-4 font-medium text-[var(--lv-text-secondary)]">
                 ₹{{ product.price }}
               </td>
 
@@ -110,8 +110,8 @@
                 <span
                   class="inline-flex rounded-full px-2.5 py-1 text-xs font-semibold"
                   :class="product.status === 'active'
-                    ? 'bg-emerald-50 text-emerald-700'
-                    : 'bg-slate-200 text-slate-600'"
+                    ? 'bg-[var(--lv-success-bg)] text-[var(--lv-success-text)]'
+                    : 'bg-[var(--lv-bg-surface-muted)] text-[var(--lv-text-muted)]'"
                 >
                   {{ product.status }}
                 </span>
@@ -120,25 +120,24 @@
               <td class="px-6 py-4 text-right">
                 <div class="flex justify-end gap-2 text-xs font-semibold uppercase tracking-[0.1em]">
                   <Button
-                  class="!bg-yellow-400 !border-yellow-400"
+                    class="!border-[var(--lv-warning-bg)] !bg-[var(--lv-warning-bg)] !text-[var(--lv-warning-text)] hover:!opacity-90"
                     :onclick="() => $router.push({ name: 'product-edit', params: { id: product.id } })"
                   >
                     <Edit class="w-4 h-4" />
                   </Button>
 
                   <Button
-                  class="!bg-red-600 !border-yellow-600"
+                    class="!border-[var(--lv-danger-bg)] !bg-[var(--lv-danger-bg)] !text-[var(--lv-danger-text)] hover:!opacity-90"
                     :onclick="() => remove(product.id)"
                   >
-                  <Trash class="w-4 h-4" />
-                </Button>
-
+                    <Trash class="w-4 h-4" />
+                  </Button>
                 </div>
               </td>
             </tr>
 
             <tr v-if="!filteredProducts.length">
-              <td colspan="5" class="px-6 py-14 text-center text-sm text-slate-500">
+              <td colspan="5" class="px-6 py-14 text-center text-sm text-[var(--lv-text-muted)]">
                 No projects found
               </td>
             </tr>
