@@ -118,19 +118,19 @@
               </td>
 
               <td class="px-6 py-4 text-right">
-                <div class="flex justify-end gap-4 text-xs font-semibold uppercase tracking-[0.1em]">
+                <div class="flex justify-end gap-2 text-xs font-semibold uppercase tracking-[0.1em]">
                   <Button
-                  class="!bg-yellow-400"
+                  class="!bg-yellow-400 !border-yellow-400"
                     :onclick="() => $router.push({ name: 'product-edit', params: { id: product.id } })"
                   >
-                    <Edit />
+                    <Edit class="w-4 h-4" />
                   </Button>
 
                   <Button
-                  class="!bg-red-600"
+                  class="!bg-red-600 !border-yellow-600"
                     :onclick="() => remove(product.id)"
                   >
-                  <Trash />
+                  <Trash class="w-4 h-4" />
                 </Button>
 
                 </div>
