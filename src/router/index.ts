@@ -48,8 +48,13 @@ const router = createRouter({
         },
         {
           path: '/projects',
-          name: 'projects',
-          component: () => import('@/views/projects/List.vue')
+          name: 'projects.list',
+          component: () => import('@/views/projects/ProjectList.vue')
+        },
+        {
+          path: '/projects/create',
+          name: 'projects.create',
+          component: () => import('@/views/projects/ProjectCreate.vue')
         },
       ],
     },

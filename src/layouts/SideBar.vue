@@ -114,7 +114,7 @@ const toggleTheme = () => {
     items: [
       { label: 'Dashboard', route: 'dashboard' },
       { label: 'Boards', route: 'boards' },
-      { label: 'Projects', route: 'projects' },
+      { label: 'Projects', route: 'projects.list' },
       { label: 'Tasks', route: 'tasks' }
     ]
   },

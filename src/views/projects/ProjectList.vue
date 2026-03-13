@@ -1,4 +1,3 @@
-<!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="space-y-6">
     <section class="rounded-2xl border border-[var(--lv-border)] bg-[var(--lv-bg-surface)] p-6 shadow-[var(--lv-shadow-sm)]">
@@ -14,12 +13,14 @@
             Track, filter, and manage your active work items.
           </p>
         </div>
-        <Button
-          @click="() => {}"
-        >
-          <Plus class="w-4 h-4" />
-          Add New
-        </Button>
+
+        <router-link :to="{name: 'projects.create'}">
+          <Button>
+            <Plus class="w-4 h-4" />
+            Add New
+          </Button>
+        </router-link>
+
       </div>
     </section>
 
