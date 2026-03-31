@@ -12,27 +12,27 @@ export interface UpdateProjectPayload {
 
 export const projectService = {
 
-  async getProjects() {
+  async getAll() {
     const res = await api.get('/projects')
     return res.data
   },
 
-  async getProject(id: number) {
+  async getOne(id: number) {
     const res = await api.get(`/projects/${id}`)
     return res.data
   },
 
-  async createProject(payload: CreateProjectPayload) {
+  async create(payload: CreateProjectPayload) {
     const res = await api.post('/projects', payload)
     return res.data
   },
 
-  async updateProject(id: number, payload: UpdateProjectPayload) {
+  async update(id: number, payload: UpdateProjectPayload) {
     const res = await api.patch(`/projects/${id}`, payload)
     return res.data
   },
 
-  async deleteProject(id: number) {
+  async delete(id: number) {
     const res = await api.delete(`/projects/${id}`)
     return res.data
   }

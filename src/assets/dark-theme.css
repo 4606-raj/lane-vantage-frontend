@@ -49,8 +49,13 @@
   --lv-btn-hover-shadow: 0 8px 16px rgba(255, 0, 0, 0.35);
   --lv-btn-disabled-bg: #17314a;
   --lv-btn-disabled-text: #8da1b5;
-  --lv-btn-sussess-bg: #2ecca0;
-
+  --lv-btn-success-bg: #1fa550;
+  --lv-btn-danger-bg: #ef4444;
+  --lv-btn-secondary-bg: #64748b;
+  --lv-btn-success-hover-bg: #188c42;
+  --lv-btn-danger-hover-bg: rgb(163, 52, 52);
+  --lv-btn-secondary-hover-bg: #535f6c;
+  
   /* Shadows */
   --lv-shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.28);
   --lv-shadow-md: 0 8px 24px rgba(0, 0, 0, 0.4);

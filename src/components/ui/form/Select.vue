@@ -10,16 +10,22 @@
       {{ label }}
     </label>
 
-    <!-- Input -->
-    <input
+    <!-- Select -->
+    <select
       :value="modelValue"
-      :type="type"
-      :placeholder="placeholder ?? label"
       :disabled="disabled"
       :required="required"
       class="h-12 w-full rounded-xl border border-[var(--lv-input-border)] bg-[var(--lv-input-bg)] px-3 text-[var(--lv-text-secondary)] outline-none transition focus:border-[var(--lv-input-border-focus)] focus:bg-[var(--lv-input-bg-focus)] focus:ring-2 focus:ring-[var(--lv-focus-ring)] disabled:opacity-50 disabled:cursor-not-allowed"
       @input="updateValue"
-    />
+    >
+      <option
+        v-for="option in options"
+        :key="option.value"
+        :value="option.value"
+      >
+        {{ option.label }}
+      </option>
+    </select>
 
     <!-- Error -->
     <p
@@ -35,17 +41,15 @@
 <script setup lang="ts">
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const props = withDefaults(defineProps<{
-  modelValue: string | number | Date | string[] | number[] | Date[] | undefined
+const props = defineProps<{
+  modelValue: string | number | string[] | number[] | undefined
   label?: string
   placeholder?: string
-  type?: string
+  options: { label: string, value: string | number }[]
   disabled?: boolean
   required?: boolean
   error?: string
-}>(), {
-  type: 'text'
-})
+}>()
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string | number): void

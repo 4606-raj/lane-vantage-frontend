@@ -31,7 +31,7 @@ export const useProjectStore = defineStore('project', {
       this.loading = true
 
       try {
-        const res = await projectService.getProjects()
+        const res = await projectService.getAll()
         this.projects = res
       } finally {
         this.loading = false
@@ -42,7 +42,7 @@ export const useProjectStore = defineStore('project', {
       this.loading = true
 
       try {
-        const res = await projectService.getProject(id)
+        const res = await projectService.getOne(id)
         this.project = res
       } finally {
         this.loading = false
@@ -53,7 +53,7 @@ export const useProjectStore = defineStore('project', {
       this.loading = true
 
       try {
-        const res = await projectService.createProject(payload)
+        const res = await projectService.create(payload)
 
         this.projects.push(res)
 
@@ -67,7 +67,7 @@ export const useProjectStore = defineStore('project', {
       this.loading = true
 
       try {
-        const res = await projectService.updateProject(id, payload)
+        const res = await projectService.update(id, payload)
 
         const index = this.projects.findIndex(p => p.id === id)
 
@@ -85,7 +85,7 @@ export const useProjectStore = defineStore('project', {
       this.loading = true
 
       try {
-        await projectService.deleteProject(id)
+        await projectService.delete(id)
 
         this.projects = this.projects.filter(p => p.id !== id)
 

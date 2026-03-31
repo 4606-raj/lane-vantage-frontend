@@ -1,3 +1,38 @@
+<script setup lang="ts">
+import Button from '@/components/ui/form/Button.vue'
+import { Edit, Plus, Trash } from 'lucide-vue-next'
+import { ref, computed } from 'vue'
+
+interface Product {
+  id: number
+  name: string
+  category: string
+  price: number
+  status: 'active' | 'inactive'
+}
+
+const search = ref('')
+const status = ref('')
+
+const products = ref<Product[]>([
+  { id: 1, name: 'Task Manager Pro', category: 'Software', price: 1999, status: 'active' },
+  { id: 2, name: 'Analytics Add-on', category: 'Addon', price: 999, status: 'inactive' },
+  { id: 3, name: 'Team Pack', category: 'Subscription', price: 4999, status: 'active' }
+])
+
+const filteredProducts = computed(() =>
+  products.value.filter(p =>
+    p.name.toLowerCase().includes(search.value.toLowerCase()) &&
+    (!status.value || p.status === status.value)
+  )
+)
+
+const remove = (id: number) => {
+  products.value = products.value.filter(p => p.id !== id)
+}
+</script>
+
+
 <template>
   <div class="space-y-6">
     <section class="rounded-2xl border border-[var(--lv-border)] bg-[var(--lv-bg-surface)] p-6 shadow-[var(--lv-shadow-sm)]">
@@ -149,37 +184,3 @@
   </div>
 
 </template>
-
-<script setup lang="ts">
-import Button from '@/components/ui/form/Button.vue'
-import { Edit, Plus, Trash } from 'lucide-vue-next'
-import { ref, computed } from 'vue'
-
-interface Product {
-  id: number
-  name: string
-  category: string
-  price: number
-  status: 'active' | 'inactive'
-}
-
-const search = ref('')
-const status = ref('')
-
-const products = ref<Product[]>([
-  { id: 1, name: 'Task Manager Pro', category: 'Software', price: 1999, status: 'active' },
-  { id: 2, name: 'Analytics Add-on', category: 'Addon', price: 999, status: 'inactive' },
-  { id: 3, name: 'Team Pack', category: 'Subscription', price: 4999, status: 'active' }
-])
-
-const filteredProducts = computed(() =>
-  products.value.filter(p =>
-    p.name.toLowerCase().includes(search.value.toLowerCase()) &&
-    (!status.value || p.status === status.value)
-  )
-)
-
-const remove = (id: number) => {
-  products.value = products.value.filter(p => p.id !== id)
-}
-</script>
