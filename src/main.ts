@@ -5,6 +5,7 @@ import { createPinia } from 'pinia'
 import Toast, { type PluginOptions } from 'vue-toastification'
 import 'vue-toastification/dist/index.css'
 import { resolveInitialTheme, setTheme } from './utils/theme'
+import '@vueform/multiselect/themes/default.css'
 
 const toastOptions: PluginOptions = {
   timeout: 3000,

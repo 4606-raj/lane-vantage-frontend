@@ -3,7 +3,7 @@ import ProjectForm from '@/forms/ProjectForm.vue'
 import type { ProjectForm as ProjectFormType } from '@/schemas/project.schema'
 import { useProjectStore } from '@/stores/project.store'
 import { toaster } from '@/utils/toast'
-import { useRouter } from 'vue-router'
+import router from '@/router'
 
 const projectStore = useProjectStore()
 
@@ -11,11 +11,10 @@ async function createProject(values: ProjectFormType) {
   try {
 
     const response = await projectStore.createProject(values)
-    const router = useRouter();
 
     toaster.success(response.message)
 
-    router.push({name: 'home'})
+    router.push({name: 'projects.list'})
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   catch(e: any) {

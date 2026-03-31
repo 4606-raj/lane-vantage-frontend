@@ -6,6 +6,7 @@ import Button from '@/components/ui/form/Button.vue'
 import Select from '@/components/ui/form/Select.vue'
 import { projectSchema, type ProjectForm } from '@/schemas/project.schema'
 import { stringFieldToDate } from '@/utils/helpers'
+import MultiSelect from '@/components/ui/form/MultiSelect.vue'
 
 const props = defineProps<{
   initialValues?: Partial<ProjectForm>
@@ -131,16 +132,15 @@ const onSubmit = handleSubmit((values) => {
         </div>
 
         <div class="flex gap-4">
-          <Select
+          <MultiSelect
             v-model="teamMembers"
             :error="errors.teamMembers"
             v-bind="teamMembersAttrs"
             label="Team Members"
-            :multiple="true"
             :options="[
-              { label: 'Member A', value: 'member_a' },
-              { label: 'Member B', value: 'member_b' },
-              { label: 'Member C', value: 'member_c' },
+              { label: 'Member A', value: '550e8400-e29b-41d4-a716-446655440000' },
+              { label: 'Member B', value: '550e8400-e29b-41d4-a716-446655440001' },
+              { label: 'Member C', value: '550e8400-e29b-41d4-a716-446655440002' },
             ]"
           />
         </div>
