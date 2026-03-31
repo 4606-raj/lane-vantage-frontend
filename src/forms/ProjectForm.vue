@@ -5,6 +5,7 @@ import Input from '@/components/ui/form/Input.vue'
 import Button from '@/components/ui/form/Button.vue'
 import Select from '@/components/ui/form/Select.vue'
 import { projectSchema, type ProjectForm } from '@/schemas/project.schema'
+import { stringFieldToDate } from '@/utils/helpers'
 
 const props = defineProps<{
   initialValues?: Partial<ProjectForm>
@@ -34,6 +35,9 @@ const [priority, priorityAttrs] = defineField('priority')
 const [owner, ownerAttrs] = defineField('owner')
 const [client, clientAttrs] = defineField('client')
 const [teamMembers, teamMembersAttrs] = defineField('teamMembers')
+
+const dateValue = stringFieldToDate(date)
+const expectedEndDateValue = stringFieldToDate(expectedEndDate)
 
 const onSubmit = handleSubmit((values) => {
   emit('submit', values)
@@ -66,14 +70,14 @@ const onSubmit = handleSubmit((values) => {
 
         <div class="flex gap-4">
           <Input
-            v-model="date"
+            v-model="dateValue"
             :error="errors.date"
             v-bind="dateAttrs"
             label="Date"
             type="date"
           />
           <Input
-            v-model="expectedEndDate"
+            v-model="expectedEndDateValue"
             :error="errors.expectedEndDate"
             v-bind="expectedEndDateAttrs"
             label="Expected End Date"
@@ -132,6 +136,7 @@ const onSubmit = handleSubmit((values) => {
             :error="errors.teamMembers"
             v-bind="teamMembersAttrs"
             label="Team Members"
+            :multiple="true"
             :options="[
               { label: 'Member A', value: 'member_a' },
               { label: 'Member B', value: 'member_b' },

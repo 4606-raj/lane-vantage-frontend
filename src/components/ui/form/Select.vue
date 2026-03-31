@@ -17,6 +17,7 @@
       :required="required"
       class="h-12 w-full rounded-xl border border-[var(--lv-input-border)] bg-[var(--lv-input-bg)] px-3 text-[var(--lv-text-secondary)] outline-none transition focus:border-[var(--lv-input-border-focus)] focus:bg-[var(--lv-input-bg-focus)] focus:ring-2 focus:ring-[var(--lv-focus-ring)] disabled:opacity-50 disabled:cursor-not-allowed"
       @input="updateValue"
+      :multiple="multiple"
     >
       <option
         v-for="option in options"
@@ -41,7 +42,7 @@
 <script setup lang="ts">
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   modelValue: string | number | string[] | number[] | undefined
   label?: string
   placeholder?: string
@@ -49,7 +50,10 @@ const props = defineProps<{
   disabled?: boolean
   required?: boolean
   error?: string
-}>()
+  multiple?: boolean
+}>(), {
+  multiple: false
+})
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: string | number): void

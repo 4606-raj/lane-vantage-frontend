@@ -20,7 +20,7 @@
       required
     />
 
-    <Button :on-click="submit" class="w-full justify-center">Sign In</Button>
+    <Button type="submit" class="w-full justify-center">Sign In</Button>
 
     <div>
       <router-link :to="{name: 'forgot-password'}">Forgot Password ?</router-link>
