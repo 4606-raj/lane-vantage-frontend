@@ -7,12 +7,14 @@ import router from '@/router'
 
 const projectStore = useProjectStore()
 
-async function createProject(values: ProjectFormType) {
+async function editProject(values: ProjectFormType) {
   try {
+    console.log(values);
+    
 
-    const response = await projectStore.createProject(values)
+    // const response = await projectStore.editProject(values)
 
-    toaster.success(response.message)
+    // toaster.success(response.message)
 
     router.push({name: 'projects.list'})
   }
@@ -27,12 +29,13 @@ async function createProject(values: ProjectFormType) {
   <div class="mx-auto p-6">
 
     <h1 class="text-xl font-semibold mb-6">
-      Create Project
+      Edit Project
     </h1>
 
     <ProjectForm
       :loading="projectStore.loading"
-      @submit="createProject"
+      canEdit="true"
+      @submit="editProject"
     />
 
   </div>

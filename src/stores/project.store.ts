@@ -63,6 +63,17 @@ export const useProjectStore = defineStore('project', {
       }
     },
 
+    async editProject(id: number) {
+      this.loading = true
+
+      try {
+        const res = await projectService.getOne(id)
+        this.project = res
+      } finally {
+        this.loading = false
+      }
+    },
+
     async updateProject(id: number, payload: UpdateProjectPayload) {
       this.loading = true
 

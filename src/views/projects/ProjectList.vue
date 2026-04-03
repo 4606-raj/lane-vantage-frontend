@@ -155,12 +155,13 @@ const remove = (id: number) => {
 
               <td class="px-6 py-4 text-right">
                 <div class="flex justify-end gap-2 text-xs font-semibold uppercase tracking-[0.1em]">
-                  <Button
-                    class="!border-[var(--lv-warning-bg)] !bg-[var(--lv-warning-bg)] !text-[var(--lv-warning-text)] hover:!opacity-90"
-                    :onclick="() => $router.push({ name: 'product-edit', params: { id: product.id } })"
-                  >
-                    <Edit class="w-4 h-4" />
-                  </Button>
+                  <router-link :to="{name: 'projects.edit', params: { id: product.id } }">
+                    <Button
+                      class="!border-[var(--lv-warning-bg)] !bg-[var(--lv-warning-bg)] !text-[var(--lv-warning-text)] hover:!opacity-90"
+                    >
+                      <Edit class="w-4 h-4" />
+                    </Button>
+                  </router-link>
 
                   <Button
                     class="!border-[var(--lv-danger-bg)] !bg-[var(--lv-danger-bg)] !text-[var(--lv-danger-text)] hover:!opacity-90"
