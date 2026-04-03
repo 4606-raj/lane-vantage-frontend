@@ -5,8 +5,7 @@ import Input from '@/components/ui/form/Input.vue'
 import Button from '@/components/ui/form/Button.vue'
 import Select from '@/components/ui/form/Select.vue'
 import { projectSchema, type ProjectForm } from '@/schemas/project.schema'
-import { stringFieldToDate } from '@/utils/helpers'
-import MultiSelect from '@/components/ui/form/MultiSelect.vue'
+import DatePicker from '@/components/ui/form/DatePicker.vue'
 
 const props = defineProps<{
   initialValues?: Partial<ProjectForm>
@@ -36,9 +35,6 @@ const [priority, priorityAttrs] = defineField('priority')
 const [owner, ownerAttrs] = defineField('owner')
 const [client, clientAttrs] = defineField('client')
 const [teamMembers, teamMembersAttrs] = defineField('teamMembers')
-
-const dateValue = stringFieldToDate(date)
-const expectedEndDateValue = stringFieldToDate(expectedEndDate)
 
 const onSubmit = handleSubmit((values) => {
   emit('submit', values)
@@ -70,19 +66,25 @@ const onSubmit = handleSubmit((values) => {
         </div>
 
         <div class="flex gap-4">
-          <Input
+          <!-- <Input
             v-model="dateValue"
             :error="errors.date"
             v-bind="dateAttrs"
             label="Date"
             type="date"
+          /> -->
+          <DatePicker
+            v-model="date"
+            v-bind="dateAttrs"            
+            :error="errors.date"
+            label="Start Date"
           />
-          <Input
-            v-model="expectedEndDateValue"
-            :error="errors.expectedEndDate"
+
+          <DatePicker
+            v-model="expectedEndDate"
             v-bind="expectedEndDateAttrs"
+            :error="errors.expectedEndDate"
             label="Expected End Date"
-            type="date"
           />
 
           <Select
@@ -118,6 +120,18 @@ const onSubmit = handleSubmit((values) => {
             label="Owner"
           />
 
+          <!-- <Select
+            v-model="client"
+            :error="errors.client"
+            v-bind="clientAttrs"
+            label="Client"
+            :options="[
+              { label: 'Client A', value: 'client_a' },
+              { label: 'Client B', value: 'client_b' },
+              { label: 'Client C', value: 'client_c' },
+            ]"
+          /> -->
+
           <Select
             v-model="client"
             :error="errors.client"
@@ -132,11 +146,12 @@ const onSubmit = handleSubmit((values) => {
         </div>
 
         <div class="flex gap-4">
-          <MultiSelect
+          <Select
             v-model="teamMembers"
             :error="errors.teamMembers"
             v-bind="teamMembersAttrs"
             label="Team Members"
+            :multiple="true"
             :options="[
               { label: 'Member A', value: '550e8400-e29b-41d4-a716-446655440000' },
               { label: 'Member B', value: '550e8400-e29b-41d4-a716-446655440001' },

@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <div class="flex flex-col gap-1 w-full my-6">
-
+    
     <!-- Label -->
     <label
       v-if="label"
@@ -10,29 +10,24 @@
       {{ label }}
     </label>
 
-    <!-- Select -->
-    <select
-      :value="modelValue"
-      :disabled="disabled"
-      :required="required"
-      class="h-12 w-full rounded-xl border border-[var(--lv-input-border)] bg-[var(--lv-input-bg)] px-3 text-[var(--lv-text-secondary)] outline-none transition focus:border-[var(--lv-input-border-focus)] focus:bg-[var(--lv-input-bg-focus)] focus:ring-2 focus:ring-[var(--lv-focus-ring)] disabled:opacity-50 disabled:cursor-not-allowed"
-      @input="updateValue"
-      :multiple="multiple"
-    >
-      <option
-        v-for="option in options"
-        :key="option.value"
-        :value="option.value"
-      >
-        {{ option.label }}
-      </option>
-    </select>
+    <!-- Multiselect -->
+    <Multiselect
+        v-model="internalValue"
+        v-bind="attrs"
+        :options="options"
+        :mode="multiple ? 'tags' : 'single'"
+        :placeholder="placeholder"
+        :disabled="disabled"
+        :searchable="true"
+        :close-on-select="!multiple"
+        :close-on-scroll="true"
+        :append-to-body="true"
+        append-to="body"
+        class="lv-multiselect"
+    />
 
     <!-- Error -->
-    <p
-      v-if="error"
-      class="text-sm text-red-500"
-    >
+    <p v-if="error" class="text-sm text-red-500">
       {{ error }}
     </p>
 
@@ -40,15 +35,17 @@
 </template>
 
 <script setup lang="ts">
+import Multiselect from '@vueform/multiselect'
+import { computed, useAttrs } from 'vue'
 
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const attrs = useAttrs()
+
 const props = withDefaults(defineProps<{
-  modelValue: string | number | string[] | number[] | undefined
+  modelValue: (string | number)[] | string | number
   label?: string
   placeholder?: string
-  options: { label: string, value: string | number }[]
+  options: { label: string; value: string | number }[]
   disabled?: boolean
-  required?: boolean
   error?: string
   multiple?: boolean
 }>(), {
@@ -56,12 +53,36 @@ const props = withDefaults(defineProps<{
 })
 
 const emit = defineEmits<{
-  (e: 'update:modelValue', value: string | number): void
+  (e: 'update:modelValue', value: (string | number)[] | string | number): void
 }>()
 
-const updateValue = (e: Event) => {
-  const target = e.target as HTMLInputElement
-  emit('update:modelValue', target.value)
+const internalValue = computed({
+  get: () => props.modelValue,
+  set: (val) => emit('update:modelValue', val)
+})
+</script>
+
+<style>
+.lv-multiselect {
+  --ms-bg: var(--lv-input-bg);
+  --ms-border-color: var(--lv-input-border);
+  --ms-radius: 0.75rem;
 }
 
-</script>
+.lv-multiselect {
+  min-height: 48px;
+  background: var(--lv-input-bg);
+  border: 1px solid var(--lv-input-border);
+  border-radius: 0.75rem;
+}
+
+.lv-multiselect .multiselect:focus-within {
+  box-shadow: 0 0 0 2px var(--lv-focus-ring);
+  border-color: var(--lv-input-border-focus);
+}
+
+/* make sure dropdown panel is above the form card */
+.multiselect-dropdown {
+  z-index: 9999 !important;
+}
+</style>
