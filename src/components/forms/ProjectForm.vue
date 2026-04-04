@@ -26,15 +26,15 @@ const { handleSubmit, errors, defineField } = useForm<ProjectForm>({
   }
 })
 
-const [name, nameAttrs] = defineField('name')
-const [description, descriptionAttrs] = defineField('description')
-const [date, dateAttrs] = defineField('date')
-const [expectedEndDate, expectedEndDateAttrs] = defineField('expectedEndDate')
-const [status, statusAttrs] = defineField('status')
-const [priority, priorityAttrs] = defineField('priority')
-const [owner, ownerAttrs] = defineField('owner')
-const [client, clientAttrs] = defineField('client')
-const [teamMembers, teamMembersAttrs] = defineField('teamMembers')
+const [name] = defineField('name')
+const [description] = defineField('description')
+const [date] = defineField('date')
+const [expectedEndDate] = defineField('expectedEndDate')
+const [status] = defineField('status')
+const [priority] = defineField('priority')
+const [owner] = defineField('owner')
+const [client] = defineField('client')
+const [teamMembers] = defineField('teamMembers')
 
 const onSubmit = handleSubmit((values) => {
   emit('submit', values)
@@ -53,14 +53,12 @@ const onSubmit = handleSubmit((values) => {
           <Input
           v-model="name"
           :error="errors.name"
-          v-bind="nameAttrs"
           label="Name"
           />
           
           <Input
           v-model="description"
           :error="errors.description"
-          v-bind="descriptionAttrs"
           label="Description"
           />
         </div>
@@ -69,20 +67,17 @@ const onSubmit = handleSubmit((values) => {
           <!-- <Input
             v-model="dateValue"
             :error="errors.date"
-            v-bind="dateAttrs"
             label="Date"
             type="date"
           /> -->
           <DatePicker
-            v-model="date"
-            v-bind="dateAttrs"            
+            v-model="date"            
             :error="errors.date"
             label="Start Date"
           />
 
           <DatePicker
             v-model="expectedEndDate"
-            v-bind="expectedEndDateAttrs"
             :error="errors.expectedEndDate"
             label="Expected End Date"
           />
@@ -90,7 +85,6 @@ const onSubmit = handleSubmit((values) => {
           <Select
             v-model="status"
             :error="errors.status"
-            v-bind="statusAttrs"
             label="Status"
             :options="[
               { label: 'Not Started', value: 'not_started' },
@@ -102,7 +96,6 @@ const onSubmit = handleSubmit((values) => {
           <Select
             v-model="priority"
             :error="errors.priority"
-            v-bind="priorityAttrs"
             label="Priority"
             :options="[
               { label: 'Low', value: 'low' },
@@ -116,14 +109,12 @@ const onSubmit = handleSubmit((values) => {
           <Input
             v-model="owner"
             :error="errors.owner"
-            v-bind="ownerAttrs"
             label="Owner"
           />
 
           <!-- <Select
             v-model="client"
             :error="errors.client"
-            v-bind="clientAttrs"
             label="Client"
             :options="[
               { label: 'Client A', value: 'client_a' },
@@ -135,7 +126,6 @@ const onSubmit = handleSubmit((values) => {
           <Select
             v-model="client"
             :error="errors.client"
-            v-bind="clientAttrs"
             label="Client"
             :options="[
               { label: 'Client A', value: 'client_a' },
@@ -149,7 +139,6 @@ const onSubmit = handleSubmit((values) => {
           <Select
             v-model="teamMembers"
             :error="errors.teamMembers"
-            v-bind="teamMembersAttrs"
             label="Team Members"
             :multiple="true"
             :options="[
