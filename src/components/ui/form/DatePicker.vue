@@ -16,6 +16,7 @@
         :placeholder="placeholder"
         :auto-apply="true"
         :enable-time-picker="false"
+        teleport="body"
         class="lv-datepicker"
     />
 

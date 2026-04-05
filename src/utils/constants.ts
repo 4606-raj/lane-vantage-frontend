@@ -6,3 +6,13 @@ export const messages = {
         invalid_value: 'Invalid value',
     }
 }
+
+export const projectStatuses = {
+    NOT_STARTED: 'Not Started',
+    IN_PROGRESS: 'In Progress',
+    COMPLETED: 'Completed',
+    ON_HOLD: 'On Hold',
+    CANCELLED: 'Cancelled'
+};
+
+export type ProjectStatus = typeof projectStatuses[keyof typeof projectStatuses];

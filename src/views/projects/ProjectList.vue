@@ -1,23 +1,30 @@
 <script setup lang="ts">
 import Button from '@/components/ui/form/Button.vue'
-import { Edit, Plus, Trash } from 'lucide-vue-next'
+import Input from '@/components/ui/form/Input.vue'
+import Select from '@/components/ui/form/Select.vue'
+import Table from '@/components/ui/Table.vue'
+import { projectStatuses, type ProjectStatus } from '@/utils/constants'
+import { Edit, Filter, Plus, Trash } from 'lucide-vue-next'
 import { ref, computed } from 'vue'
 
 interface Product {
   id: number
   name: string
-  category: string
-  price: number
-  status: 'active' | 'inactive'
+  startDate?: string
+  expectedEndDate?: string
+  priority?: 'low' | 'medium' | 'high'
+  status: ProjectStatus
 }
+const statusOptions = Object.values(projectStatuses).map(status => ({
+  label: status,
+  value: status
+}))
 
 const search = ref('')
 const status = ref('')
-
+const showFilters = ref(false)
 const products = ref<Product[]>([
-  { id: 1, name: 'Task Manager Pro', category: 'Software', price: 1999, status: 'active' },
-  { id: 2, name: 'Analytics Add-on', category: 'Addon', price: 999, status: 'inactive' },
-  { id: 3, name: 'Team Pack', category: 'Subscription', price: 4999, status: 'active' }
+  { id: 1, name: 'Project Alpha', startDate: '2023-01-01', expectedEndDate: '2023-12-31', priority: 'high', status: 'Not Started' }
 ])
 
 const filteredProducts = computed(() =>
@@ -30,6 +37,17 @@ const filteredProducts = computed(() =>
 const remove = (id: number) => {
   products.value = products.value.filter(p => p.id !== id)
 }
+
+const headers = [
+  { label: 'Id', key: 'id' },
+  { label: 'Name', key: 'name' },
+  { label: 'Start Date', key: 'startDate' },
+  { label: 'Expected End Date', key: 'expectedEndDate' },
+  { label: 'Priority', key: 'priority' },
+  { label: 'Status', key: 'status' },
+  { label: 'Actions', key: 'actions' }
+]
+
 </script>
 
 
@@ -49,71 +67,92 @@ const remove = (id: number) => {
           </p>
         </div>
 
-        <router-link :to="{name: 'projects.create'}">
-          <Button>
-            <Plus class="w-4 h-4" />
-            Add New
+        <div class="flex items-center gap-2">
+          <Button :onClick="() => { showFilters = !showFilters }">
+            <Filter class="w-4 h-4" />
           </Button>
-        </router-link>
+
+          <router-link :to="{name: 'projects.create'}">
+            <Button>
+              <Plus class="w-4 h-4" />
+              Add New
+            </Button>
+          </router-link>
+        </div>
 
       </div>
     </section>
 
-    <section class="rounded-2xl border border-[var(--lv-border)] bg-[var(--lv-bg-surface)] p-4 shadow-[var(--lv-shadow-sm)] sm:p-5">
-      <div class="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-        <div class="flex flex-1 flex-col gap-3 sm:flex-row">
-          <label class="relative block w-full sm:max-w-md">
-            <span class="pointer-events-none absolute left-3 top-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--lv-text-faint)]">
-              Search
-            </span>
-            <input
-              v-model="search"
-              type="text"
-              placeholder="Find a project"
-              class="h-12 w-full rounded-xl border border-[var(--lv-input-border)] bg-[var(--lv-input-bg)] px-3 pt-4 text-sm text-[var(--lv-text-secondary)] outline-none transition focus:border-[var(--lv-input-border-focus)] focus:bg-[var(--lv-input-bg-focus)] focus:ring-2 focus:ring-[var(--lv-focus-ring)]"
-            />
-          </label>
-
-          <label class="relative block w-full sm:w-56">
-            <span class="pointer-events-none absolute left-3 top-2 text-[11px] font-semibold uppercase tracking-[0.18em] text-[var(--lv-text-faint)]">
-              Status
-            </span>
-            <select
-              v-model="status"
-              class="h-12 w-full appearance-none rounded-xl border border-[var(--lv-input-border)] bg-[var(--lv-input-bg)] px-3 pt-4 text-sm text-[var(--lv-text-secondary)] outline-none transition focus:border-[var(--lv-input-border-focus)] focus:bg-[var(--lv-input-bg-focus)] focus:ring-2 focus:ring-[var(--lv-focus-ring)]"
-            >
-              <option value="">
-                All Status
-              </option>
-              <option value="active">
-                Active
-              </option>
-              <option value="inactive">
-                Inactive
-              </option>
-            </select>
-          </label>
+    <!-- Filters -->
+    <section v-show="showFilters" class="flex gap-6 rounded-2xl border border-[var(--lv-border)] bg-[var(--lv-bg-surface)] p-4 shadow-[var(--lv-shadow-sm)] sm:p-5">
+      <Input
+          v-model="search"
+          placeholder="Search projects..."
+          class="w-1/2 md:w-1/6"
+        />
+        <Select
+          v-model="status"
+          :options="statusOptions"
+          placeholder="All Status"
+          class="w-1/2 md:w-1/6"
+        />
+        <div class="ml-auto flex items-center gap-2">
+          <span class="self-center rounded-full bg-[var(--lv-bg-surface-muted)] px-3 py-1 text-xs font-semibold text-[var(--lv-text-muted)] md:self-center">
+            {{ filteredProducts.length }} Results
+          </span>
         </div>
-
-        <span class="self-start rounded-full bg-[var(--lv-bg-surface-muted)] px-3 py-1 text-xs font-semibold text-[var(--lv-text-muted)] md:self-center">
-          {{ filteredProducts.length }} Results
-        </span>
-      </div>
     </section>
 
     <section class="overflow-hidden rounded-2xl border border-[var(--lv-border)] bg-[var(--lv-bg-surface)] shadow-[var(--lv-shadow-sm)]">
       <div class="overflow-x-auto">
-        <table class="min-w-full text-sm">
+
+        <Table :headers="headers" :items="filteredProducts">
+
+          <template #status="{ item }">
+            <span class="font-semibold">
+              {{ item.status }}
+            </span>
+          </template>
+
+          <!-- Actions column -->
+          <template #actions="{ item }">
+            <div class="flex justify-end gap-2 text-xs font-semibold uppercase tracking-[0.1em]">
+              <router-link :to="{name: 'projects.edit', params: { id: item.id } }">
+                <Button
+                  class="!border-[var(--lv-warning-bg)] !bg-[var(--lv-warning-bg)] !text-[var(--lv-warning-text)] hover:!opacity-90"
+                >
+                  <Edit class="w-4 h-4" />
+                </Button>
+              </router-link>
+
+              <Button
+                class="!border-[var(--lv-danger-bg)] !bg-[var(--lv-danger-bg)] !text-[var(--lv-danger-text)] hover:!opacity-90"
+                :onclick="() => remove(item.id)"
+              >
+                <Trash class="w-4 h-4" />
+              </Button>
+            </div>
+          </template>
+
+        </Table>
+        
+        <!-- <table class="min-w-full text-sm">
           <thead class="bg-[var(--lv-bg-surface-soft)] text-[var(--lv-text-muted)]">
             <tr>
               <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.16em]">
-                Project
+                Id
               </th>
               <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.16em]">
-                Category
+                Name
               </th>
               <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.16em]">
-                Budget
+                Start Date
+              </th>
+              <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.16em]">
+                Expected End Date
+              </th>
+              <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.16em]">
+                Priority
               </th>
               <th class="px-6 py-3 text-left text-xs font-semibold uppercase tracking-[0.16em]">
                 Status
@@ -131,23 +170,28 @@ const remove = (id: number) => {
               class="border-t border-[var(--lv-border-soft)] transition hover:bg-[var(--lv-bg-surface-soft)]"
             >
               <td class="px-6 py-4 font-medium text-[var(--lv-text-primary)]">
-                {{ product.name }}
+                {{ product.id }}
               </td>
 
               <td class="px-6 py-4 text-[var(--lv-text-secondary)]">
-                {{ product.category }}
+                {{ product.name }}
               </td>
 
               <td class="px-6 py-4 font-medium text-[var(--lv-text-secondary)]">
-                ₹{{ product.price }}
+                {{ product.startDate }}
+              </td>
+
+              <td class="px-6 py-4 font-medium text-[var(--lv-text-secondary)]">
+                {{ product.expectedEndDate }}
+              </td>
+
+              <td class="px-6 py-4 font-medium text-[var(--lv-text-secondary)]">
+                {{ product.priority }}
               </td>
 
               <td class="px-6 py-4">
                 <span
                   class="inline-flex rounded-full px-2.5 py-1 text-xs font-semibold"
-                  :class="product.status === 'active'
-                    ? 'bg-[var(--lv-success-bg)] text-[var(--lv-success-text)]'
-                    : 'bg-[var(--lv-bg-surface-muted)] text-[var(--lv-text-muted)]'"
                 >
                   {{ product.status }}
                 </span>
@@ -179,7 +223,8 @@ const remove = (id: number) => {
               </td>
             </tr>
           </tbody>
-        </table>
+        </table> -->
+
       </div>
     </section>
   </div>
