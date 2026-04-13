@@ -1,25 +1,16 @@
 import { defineStore } from 'pinia'
 import { projectService, type CreateProjectPayload, type UpdateProjectPayload } from '@/services/project.service'
-import type { ProjectStatus } from '@/utils/constants'
-
-export interface Project {
-  id: number
-  name: string
-  startDate?: string
-  expectedEndDate?: string
-  priority?: 'low' | 'medium' | 'high'
-  status: ProjectStatus
-}
+import type { ProjectForm } from '@/schemas/project.schema'
 
 interface ProjectState {
-  projects: Project[]
-  project: Project | null
+  projects: ProjectForm[]
+  project: Partial<ProjectForm> | null
   loading: boolean
 }
 
 export const useProjectStore = defineStore('project', {
   state: (): ProjectState => ({
-    projects:  [] as Project[],
+    projects:  [] as ProjectForm[],
     project: null,
     loading: false
   }),

@@ -10,7 +10,7 @@ import { computed, onMounted } from 'vue'
 import { useUserStore } from '@/stores/users.store'
 
 const props = defineProps<{
-  initialValues?: Partial<ProjectForm>
+  initialValues?: Partial<ProjectForm> | null
   loading?: boolean
 }>()
 

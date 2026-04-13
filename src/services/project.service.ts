@@ -28,7 +28,7 @@ export const projectService = {
   },
 
   async update(id: number, payload: UpdateProjectPayload) {
-    const res = await api.patch(`/projects/${id}`, payload)
+    const res = await api.put(`/projects/${id}`, payload)
     return res.data
   },
 

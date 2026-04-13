@@ -3,6 +3,8 @@ import { z } from 'zod'
 import { messages } from '@/utils/constants';
 
 export const projectSchema = z.object({
+  id: z.number().optional(),
+  
   name: z.string({ message: messages.validation.not_empty })
     .min(3, { message: messages.validation.min_string }),
 
