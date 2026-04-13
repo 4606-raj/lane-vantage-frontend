@@ -9,16 +9,14 @@ const projectStore = useProjectStore()
 
 async function createProject(values: ProjectFormType) {
   try {
-
     const response = await projectStore.createProject(values)
 
     toaster.success(response.message)
 
     router.push({name: 'projects.list'})
   }
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   catch(e: any) {
-    toaster.error(e.message)
+    toaster.error(e.response.data.message || e.message)
   }
 }
 </script>

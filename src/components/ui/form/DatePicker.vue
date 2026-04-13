@@ -11,13 +11,13 @@
 
     <!-- Datepicker -->
     <VueDatePicker
-        v-model="internalValue"
-        v-bind="attrs"
-        :placeholder="placeholder"
-        :auto-apply="true"
-        :enable-time-picker="false"
-        teleport="body"
-        class="lv-datepicker"
+      v-model="internalValue"
+      :placeholder="placeholder"
+      :auto-apply="true"
+      :time-config="{ enableTimePicker: withTime }"
+      teleport="body"
+      class="lv-datepicker"
+      :model-type="'timestamp'"
     />
 
     <!-- Error -->
@@ -35,12 +35,15 @@ import { computed, useAttrs } from 'vue'
 
 const attrs = useAttrs()
 
-const props = defineProps<{
+const props = withDefaults(defineProps<{
   modelValue?: Date | null
+  withTime?: boolean
   label?: string
   placeholder?: string
   error?: string
-}>()
+}>(), {
+  withTime: false
+})
 
 const emit = defineEmits<{
   (e: 'update:modelValue', value: Date | null): void

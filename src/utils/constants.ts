@@ -8,11 +8,11 @@ export const messages = {
 }
 
 export const projectStatuses = {
-    NOT_STARTED: 'Not Started',
-    IN_PROGRESS: 'In Progress',
-    COMPLETED: 'Completed',
-    ON_HOLD: 'On Hold',
-    CANCELLED: 'Cancelled'
+    not_started: 'Not Started',
+    in_progress: 'In Progress',
+    completed: 'Completed',
+    on_hold: 'On Hold',
+    cancelled: 'Cancelled'
 };
 
 export type ProjectStatus = typeof projectStatuses[keyof typeof projectStatuses];

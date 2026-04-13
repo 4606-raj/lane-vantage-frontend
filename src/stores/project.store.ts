@@ -1,11 +1,14 @@
 import { defineStore } from 'pinia'
 import { projectService, type CreateProjectPayload, type UpdateProjectPayload } from '@/services/project.service'
+import type { ProjectStatus } from '@/utils/constants'
 
 export interface Project {
   id: number
   name: string
-  description?: string
-  createdAt: string
+  startDate?: string
+  expectedEndDate?: string
+  priority?: 'low' | 'medium' | 'high'
+  status: ProjectStatus
 }
 
 interface ProjectState {
@@ -16,7 +19,7 @@ interface ProjectState {
 
 export const useProjectStore = defineStore('project', {
   state: (): ProjectState => ({
-    projects: [],
+    projects:  [] as Project[],
     project: null,
     loading: false
   }),
@@ -55,7 +58,7 @@ export const useProjectStore = defineStore('project', {
       try {
         const res = await projectService.create(payload)
 
-        this.projects.push(res)
+        this.projects.push(res.data)
 
         return { message: 'Project created successfully' }
       } finally {
@@ -68,7 +71,7 @@ export const useProjectStore = defineStore('project', {
 
       try {
         const res = await projectService.getOne(id)
-        this.project = res
+        this.project = res.data
       } finally {
         this.loading = false
       }
@@ -83,7 +86,7 @@ export const useProjectStore = defineStore('project', {
         const index = this.projects.findIndex(p => p.id === id)
 
         if (index !== -1) {
-          this.projects[index] = res
+          this.projects[index] = res.data
         }
 
         return { message: 'Project updated successfully' }

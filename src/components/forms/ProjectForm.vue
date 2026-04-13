@@ -6,6 +6,8 @@ import Button from '@/components/ui/form/Button.vue'
 import Select from '@/components/ui/form/Select.vue'
 import { projectSchema, type ProjectForm } from '@/schemas/project.schema'
 import DatePicker from '@/components/ui/form/DatePicker.vue'
+import { computed, onMounted } from 'vue'
+import { useUserStore } from '@/stores/users.store'
 
 const props = defineProps<{
   initialValues?: Partial<ProjectForm>
@@ -16,6 +18,7 @@ const emit = defineEmits<{
   submit: [values: ProjectForm]
 }>()
 
+// form setup
 const { handleSubmit, errors, defineField } = useForm<ProjectForm>({
   validationSchema: toTypedSchema(projectSchema),
   initialValues: {
@@ -26,15 +29,29 @@ const { handleSubmit, errors, defineField } = useForm<ProjectForm>({
   }
 })
 
+// form fields
 const [name] = defineField('name')
 const [description] = defineField('description')
-const [date] = defineField('date')
+const [date] = defineField('startDate')
 const [expectedEndDate] = defineField('expectedEndDate')
 const [status] = defineField('status')
 const [priority] = defineField('priority')
-const [owner] = defineField('owner')
-const [client] = defineField('client')
 const [teamMembers] = defineField('teamMembers')
+
+// fetch users for team members select
+const userStore = useUserStore()
+
+onMounted(async () => {
+  await userStore.fetchUsers()
+})
+
+// map users to select options
+const users = computed(() => {
+  return userStore.users.map(user => ({
+    label: user.name,
+    value: user.id
+  }))
+})
 
 const onSubmit = handleSubmit((values) => {
   emit('submit', values)
@@ -64,15 +81,9 @@ const onSubmit = handleSubmit((values) => {
         </div>
 
         <div class="flex gap-4">
-          <!-- <Input
-            v-model="dateValue"
-            :error="errors.date"
-            label="Date"
-            type="date"
-          /> -->
           <DatePicker
             v-model="date"            
-            :error="errors.date"
+            :error="errors.startDate"
             label="Start Date"
           />
 
@@ -106,46 +117,12 @@ const onSubmit = handleSubmit((values) => {
         </div>
 
         <div class="flex gap-4">
-          <Input
-            v-model="owner"
-            :error="errors.owner"
-            label="Owner"
-          />
-
-          <!-- <Select
-            v-model="client"
-            :error="errors.client"
-            label="Client"
-            :options="[
-              { label: 'Client A', value: 'client_a' },
-              { label: 'Client B', value: 'client_b' },
-              { label: 'Client C', value: 'client_c' },
-            ]"
-          /> -->
-
-          <Select
-            v-model="client"
-            :error="errors.client"
-            label="Client"
-            :options="[
-              { label: 'Client A', value: 'client_a' },
-              { label: 'Client B', value: 'client_b' },
-              { label: 'Client C', value: 'client_c' },
-            ]"
-          />
-        </div>
-
-        <div class="flex gap-4">
           <Select
             v-model="teamMembers"
             :error="errors.teamMembers"
             label="Team Members"
             :multiple="true"
-            :options="[
-              { label: 'Member A', value: '550e8400-e29b-41d4-a716-446655440000' },
-              { label: 'Member B', value: '550e8400-e29b-41d4-a716-446655440001' },
-              { label: 'Member C', value: '550e8400-e29b-41d4-a716-446655440002' },
-            ]"
+            :options="users"
           />
         </div>
       </div>
