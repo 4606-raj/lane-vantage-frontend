@@ -8,6 +8,9 @@ import { Edit, Filter, Plus, Trash } from 'lucide-vue-next'
 import { computed, onMounted } from 'vue'
 import { useProjectStore } from '@/stores/project.store'
 import { ref } from 'vue'
+import Pageheader from '@/components/ui/Pageheader.vue'
+import StatusChip from '@/components/ui/StatusChip.vue'
+import PriorityChip from '@/components/ui/PriorityChip.vue'
 
 const statusOptions = Object.values(projectStatuses).map(status => ({
   label: status,
@@ -49,36 +52,20 @@ const headers = [
 
 <template>
   <div class="space-y-6">
-    <section class="rounded-2xl border border-[var(--lv-border)] bg-[var(--lv-bg-surface)] p-6 shadow-[var(--lv-shadow-sm)]">
-      <div class="flex flex-wrap items-start justify-between gap-4">
-        <div>
-          <p class="text-[11px] font-semibold uppercase `tra`cking-[0.22em] text-[var(--lv-text-faint)]">
-            Workspace
-          </p>
-          <h1 class="mt-1 text-2xl font-semibold tracking-tight text-[var(--lv-text-primary)]">
-            Projects
-          </h1>
-          <p class="mt-1 text-sm text-[var(--lv-text-muted)]">
-            Track, filter, and manage your active work items.
-          </p>
-        </div>
 
-        <div class="flex items-center gap-2">
-          <Button :onClick="() => { showFilters = !showFilters }">
-            <Filter class="w-4 h-4" />
-          </Button>
+    <Pageheader subHeading="Projects" mainHeading="Projects" tagline="Track, filter, and manage your active work items.">
+      <Button :onClick="() => { showFilters = !showFilters }">
+        <Filter class="w-4 h-4" />
+      </Button>
 
-          <router-link :to="{name: 'projects.create'}">
-            <Button>
-              <Plus class="w-4 h-4" />
-              Add New
-            </Button>
-          </router-link>
-        </div>
-
-      </div>
-    </section>
-
+      <router-link :to="{name: 'projects.create'}">
+        <Button>
+          <Plus class="w-4 h-4" />
+          Add New
+        </Button>
+      </router-link>
+    </Pageheader>
+    
     <!-- Filters -->
     <section v-show="showFilters" class="flex gap-6 rounded-2xl border border-[var(--lv-border)] bg-[var(--lv-bg-surface)] p-4 shadow-[var(--lv-shadow-sm)] sm:p-5">
       <Input
@@ -104,10 +91,12 @@ const headers = [
 
         <Table :headers="headers" :items="products">
 
+          <template #priority="{ item }">
+            <PriorityChip :priority="item.priority" />
+          </template>
+          
           <template #status="{ item }">
-            <span class="font-semibold">
-              {{ projectStatuses[item.status as keyof typeof projectStatuses] }}
-            </span>
+            <StatusChip :status="item.status" />
           </template>
 
           <!-- Actions column -->

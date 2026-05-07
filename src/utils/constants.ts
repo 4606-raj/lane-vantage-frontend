@@ -15,4 +15,11 @@ export const projectStatuses = {
     cancelled: 'Cancelled'
 };
 
+export const projectPriorities = {
+    low: 'Low',
+    medium: 'Medium',
+    high: 'High',
+}
+
 export type ProjectStatus = typeof projectStatuses[keyof typeof projectStatuses];
+export type projectPriorities = typeof projectPriorities[keyof typeof projectPriorities];

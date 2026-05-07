@@ -25,23 +25,27 @@ export interface defaultResponse {
 
 export const authService = {
 
-    login(payload: LoginPayload): Promise<LoginResponse> {
-      return api.post('/auth/login', payload)
+    async login(payload: LoginPayload) {
+      const response = await api.post('/auth/login', payload)
+      return response.data
     },
 
-    forgotPassword(email: string): Promise<defaultResponse> {
-      return api.post('/auth/forgot-password', {email})
+    async forgotPassword(email: string) {
+      const response = await api.post('/auth/forgot-password', {email})
+      return response.data
     },
 
-    resetPassword(payload: ResetPasswordPayload): Promise<defaultResponse> {
+    async resetPassword(payload: ResetPasswordPayload) {
 
       const password = payload.password
       const token = payload.token
 
-      return api.post('/auth/reset-password', {token, password})
+      const response = await api.post('/auth/reset-password', {token, password})
+      return response.data
     },
 
-    logout(token: string): Promise<defaultResponse> {
-      return api.post('/auth/logout', {token})
+    async logout(token: string) {
+      const response = await api.post('/auth/logout', {token})
+      return response.data
     }
 }

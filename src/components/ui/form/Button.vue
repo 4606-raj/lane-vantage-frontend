@@ -4,7 +4,7 @@
     <button
       :type="type"
       :disabled="uiStore.buttonLoading || disabled"
-      class="flex cursor-pointer items-center justify-center gap-3 mx-2 rounded-lg border border-[var(--lv-border)] px-4 py-2 text-center align-middle shadow-[var(--lv-shadow-sm)] transition-all hover:shadow-lg hover:shadow-[var(--lv-btn-hover-shadow)] focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+      class="flex cursor-pointer items-center justify-center gap-3 rounded-lg border border-[var(--lv-border)] px-4 py-2 text-center align-middle shadow-[var(--lv-shadow-sm)] transition-all hover:shadow-lg hover:shadow-[var(--lv-btn-hover-shadow)] focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
       :class="[
     variantClasses[variant],
     uiStore.buttonLoading || disabled

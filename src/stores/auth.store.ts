@@ -30,6 +30,7 @@ export const useAuthStore = defineStore('auth', {
 
             const response = await authService.login(payload)
 
+            console.log(response, 'response')
             this.token = response.accessToken;
             this.user = response.user;
 

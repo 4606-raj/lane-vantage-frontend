@@ -8,6 +8,7 @@ import { projectSchema, type ProjectForm } from '@/schemas/project.schema'
 import DatePicker from '@/components/ui/form/DatePicker.vue'
 import { computed, onMounted } from 'vue'
 import { useUserStore } from '@/stores/users.store'
+import { projectStatuses, projectPriorities } from '@/utils/constants'
 
 const props = defineProps<{
   initialValues?: Partial<ProjectForm> | null
@@ -28,6 +29,16 @@ const { handleSubmit, errors, defineField } = useForm<ProjectForm>({
     ...props.initialValues
   }
 })
+
+const projectStatusOptions = Object.entries(projectStatuses).map(([key, v]) => ({
+    label: v,
+    value: key
+}));
+
+const priorityOptions = Object.entries(projectPriorities).map(([key, v]) => ({
+    label: v,
+    value: key
+}));
 
 // form fields
 const [name] = defineField('name')
@@ -97,22 +108,14 @@ const onSubmit = handleSubmit((values) => {
             v-model="status"
             :error="errors.status"
             label="Status"
-            :options="[
-              { label: 'Not Started', value: 'not_started' },
-              { label: 'In Progress', value: 'in_progress' },
-              { label: 'Completed', value: 'completed' },
-            ]"
+            :options="projectStatusOptions"
           />
 
           <Select
             v-model="priority"
             :error="errors.priority"
             label="Priority"
-            :options="[
-              { label: 'Low', value: 'low' },
-              { label: 'Medium', value: 'medium' },
-              { label: 'High', value: 'high' },
-            ]"
+            :options="priorityOptions"
           />
         </div>
 
