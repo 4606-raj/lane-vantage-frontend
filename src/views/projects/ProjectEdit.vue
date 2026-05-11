@@ -1,8 +1,10 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { onMounted } from 'vue'
 import ProjectForm from '@/components/forms/ProjectForm.vue'
 import type { ProjectForm as ProjectFormType } from '@/schemas/project.schema'
 import { useProjectStore } from '@/stores/project.store'
+import { handleFormError } from '@/utils/form-error'
 import { toaster } from '@/utils/toast'
 import router from '@/router'
 import { useRoute } from 'vue-router'
@@ -10,6 +12,7 @@ import { useRoute } from 'vue-router'
 const projectStore = useProjectStore()
 const route = useRoute()
 const id = route.params.id
+const formRef = ref()
 
 onMounted(async () => {
   await projectStore.fetchProject(Number(id))  
@@ -17,9 +20,6 @@ onMounted(async () => {
 
 async function editProject(values: ProjectFormType) {
   try {
-    console.log(values);
-    
-
     const response = await projectStore.updateProject(Number(id), values)
 
     toaster.success(response.message)
@@ -28,7 +28,8 @@ async function editProject(values: ProjectFormType) {
   }
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   catch(e: any) {
-    toaster.error(e.message)
+    handleFormError(e, formRef)
+
   }
 }
 </script>
@@ -41,6 +42,7 @@ async function editProject(values: ProjectFormType) {
     </h1>
 
     <ProjectForm
+      ref="formRef"
       :loading="projectStore.loading"
       v-if="projectStore.project"
       canEdit="true"

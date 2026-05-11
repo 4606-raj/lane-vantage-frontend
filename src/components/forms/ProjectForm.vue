@@ -20,14 +20,18 @@ const emit = defineEmits<{
 }>()
 
 // form setup
-const { handleSubmit, errors, defineField } = useForm<ProjectForm>({
+const { handleSubmit, errors, defineField, setErrors } = useForm<ProjectForm>({
   validationSchema: toTypedSchema(projectSchema),
   initialValues: {
     status: 'not_started',
     priority: 'medium',
     teamMembers: [],
     ...props.initialValues
-  }
+  },
+})
+
+defineExpose({
+  setErrors,
 })
 
 const projectStatusOptions = Object.entries(projectStatuses).map(([key, v]) => ({
@@ -93,7 +97,7 @@ const onSubmit = handleSubmit((values) => {
 
         <div class="flex gap-4">
           <DatePicker
-            v-model="date"            
+            v-model="date"
             :error="errors.startDate"
             label="Start Date"
           />

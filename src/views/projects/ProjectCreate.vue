@@ -1,11 +1,14 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import ProjectForm from '@/components/forms/ProjectForm.vue'
 import type { ProjectForm as ProjectFormType } from '@/schemas/project.schema'
 import { useProjectStore } from '@/stores/project.store'
 import { toaster } from '@/utils/toast'
+import { handleFormError } from '@/utils/form-error'
 import router from '@/router'
 
 const projectStore = useProjectStore()
+const formRef = ref()
 
 async function createProject(values: ProjectFormType) {
   try {
@@ -16,7 +19,7 @@ async function createProject(values: ProjectFormType) {
     router.push({name: 'projects.list'})
   }
   catch(e: any) {
-    toaster.error(e.response.data.message || e.message)
+    handleFormError(e, formRef)
   }
 }
 </script>
@@ -29,6 +32,7 @@ async function createProject(values: ProjectFormType) {
     </h1>
 
     <ProjectForm
+      ref="formRef"
       :loading="projectStore.loading"
       @submit="createProject"
     />
